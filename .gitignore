@@ -1,0 +1,7 @@
+/Persephone/.vs
+/Persephone/include/
+/Persephone/x64/
+/Persephone/packages
+*.vcxproj*
+*.sln
+/PersephoneTests/x64/
