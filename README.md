@@ -1,7 +1,6 @@
 # Persephone
-It is a heat conduction simulation program that provides finite volumetric heat conduction simulation by finite time step and equidistant spatial grid model.
-The software architecture is represented as a distributed system, that can be utilized and executed on computing grid infrastructure. The system owns the 
-general properties of a distributed software.
+It is a heat conduction simulation program that provides finite volumetric heat conduction simulation for FDM 3D printing technology by finite time step and equidistant spatial grid model.
+The software architecture is represented as a distributed system, that can be utilized and executed on computing grid infrastructure. The system owns the general properties of a distributed software.
 
 ## System architecture
 Todo
