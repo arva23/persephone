@@ -18,7 +18,7 @@ namespace PrinterOptimizerTests
 		TEST_METHOD(ObjectResourceManagement) {
 
 			// FDM1();
-			FDM1<T> test_object_0;
+			printerheatconduction::FDM1<T> test_object_0;
 
 
 			// FDM1(std::vector<T*>&values, std::vector<T*>&coeffs, T space_step, T start_time);
@@ -27,7 +27,7 @@ namespace PrinterOptimizerTests
 
 			try {
 				
-				FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("0.0"));
+				printerheatconduction::FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("0.0"));
 				Assert::Fail(); 
 			}
 			catch (std::exception err) {
@@ -39,7 +39,7 @@ namespace PrinterOptimizerTests
 
 			try {
 			
-				FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("0.0"));
+				printerheatconduction::FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("0.0"));
 				Assert::Fail();
 			}
 			catch (std::exception err) {
@@ -52,7 +52,7 @@ namespace PrinterOptimizerTests
 
 			try {
 			
-				FDM1<T> test_object_0(&values, &coeffs, T("-1.0"), T("0.0"));
+				printerheatconduction::FDM1<T> test_object_0(&values, &coeffs, T("-1.0"), T("0.0"));
 				Assert::Fail();
 			}
 			catch (std::exception err) {
@@ -62,7 +62,7 @@ namespace PrinterOptimizerTests
 
 			try {
 			
-				FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("-1.0"));
+				printerheatconduction::FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("-1.0"));
 				Assert::Fail();
 			}
 			catch (std::exception err) {
@@ -70,9 +70,9 @@ namespace PrinterOptimizerTests
 				Assert::IsTrue(err.what() == std::string("Start time can not be negative (FDM1)."));
 			}
 
-			FDM1<T> test_object_1(&values, &coeffs, T("1.0"), T("0.0"));
+			printerheatconduction::FDM1<T> test_object_1(&values, &coeffs, T("1.0"), T("0.0"));
 
-			FDM1<T> test_object_2(test_object_1);
+			printerheatconduction::FDM1<T> test_object_2(test_object_1);
 			Assert::IsTrue(test_object_2 == test_object_1);
 
 			// ~FDM1();
@@ -85,8 +85,8 @@ namespace PrinterOptimizerTests
 			// FDM1<T>& operator=(const FDM1<T>&orig);
 			genmath::Vector<T> values(std::vector<T>{ T("24.0"), T("24.0"), T("50.0") });
 			genmath::Vector<T> coeffs(std::vector<T>{ T("0.5"), T("0.5"), T("0.5") });
-			FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("0.0"));
-			FDM1<T> test_object_1 = test_object_0;
+			printerheatconduction::FDM1<T> test_object_0(&values, &coeffs, T("1.0"), T("0.0"));
+			printerheatconduction::FDM1<T> test_object_1 = test_object_0;
 			Assert::IsTrue(test_object_1 == test_object_0);
 		}
 
@@ -107,7 +107,7 @@ namespace PrinterOptimizerTests
 			T unit_elem("1.0");
 			T mtx_coeff = time_step / (T("2.0") * space_step * space_step);
 			
-			FDM1<T> test_object_0(&values_0, &coeffs_0, T("0.2"), T("0.0"));
+			printerheatconduction::FDM1<T> test_object_0(&values_0, &coeffs_0, T("0.2"), T("0.0"));
 			
 			std::vector<T> lhs_data{
 
@@ -163,7 +163,7 @@ namespace PrinterOptimizerTests
 			
 
 			// genmath::Vector<T> operator++(int);
-			FDM1<T> test_object_1(&values_1, &coeffs_0, T("0.2"), T("0.0"));
+			printerheatconduction::FDM1<T> test_object_1(&values_1, &coeffs_0, T("0.2"), T("0.0"));
 			test_object_1++;
 			genmath::Vector<T> result_01 = test_object_1.GetRecentValues();
 			Assert::IsTrue(result_01 == result_0);
@@ -200,7 +200,7 @@ namespace PrinterOptimizerTests
 			mod_rhs_1 = (identity_mtx + rhs_mtx.GenLinComb(coeffs_0)) * result_024;
 			genmath::Vector<T> result_025 = mod_lhs_1.SolveGauss(mod_rhs_1);
 
-			FDM1<T> test_object_2(&values_2, &coeffs_0, T("0.2"), T("0.0"));
+			printerheatconduction::FDM1<T> test_object_2(&values_2, &coeffs_0, T("0.2"), T("0.0"));
 			genmath::Vector<T> result_02 = test_object_2 += (T("0.095238095238095261") * T("5.0"));
 
 
@@ -240,7 +240,7 @@ namespace PrinterOptimizerTests
 			genmath::Vector<T> coeffs_0(std::vector<T>{ T("0.5"), T("0.5"), T("0.5"), T("0.5"), T("0.5"),
 				T("0.5"), T("0.5"), T("0.5"), T("0.5"), T("0.5") });
 
-			FDM1<T> test_object_0(&values_0, &coeffs_0, T("1.0"), T("0.0"));
+			printerheatconduction::FDM1<T> test_object_0(&values_0, &coeffs_0, T("1.0"), T("0.0"));
 			Assert::IsTrue(test_object_0.GetRecentValues() == values_0);
 
 

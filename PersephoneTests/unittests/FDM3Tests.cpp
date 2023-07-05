@@ -17,7 +17,7 @@ namespace PrinterOptimizerTests
 		TEST_METHOD(ObjectResourceManagement) {
 		
 			// FDM3();
-			FDM3<T> test_object_0;
+			printerheatconduction::FDM3<T> test_object_0;
 			
 
 			// FDM3(const size_t x_length,
@@ -44,19 +44,20 @@ namespace PrinterOptimizerTests
 			//T space_step("0.4");
 			T space_step("1.0");
 			
-			FDM3<T> test_object_1(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
+			printerheatconduction::FDM3<T> test_object_1(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
 				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, true);
 
-			FDM3<T> test_object_2(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
+			printerheatconduction::FDM3<T> test_object_2(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
 				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, false);
 			
 			
 			// FDM3(const FDM3<T>&orig);
-			FDM3<T> test_object_4(test_object_2);
+			printerheatconduction::FDM3<T> test_object_4(test_object_2);
 			
 			
 			// ~FDM3();
-			FDM3<T>* test_object_7 = new FDM3<T>(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
+			printerheatconduction::FDM3<T>* test_object_7 = new printerheatconduction::FDM3<T>(
+				x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
 				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, false);
 			delete test_object_7;
 			// or RAII
@@ -79,15 +80,15 @@ namespace PrinterOptimizerTests
 			//T space_step("0.4");
 			T space_step("1.0");
 			
-			FDM3<T> test_object_1(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
+			printerheatconduction::FDM3<T> test_object_1(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
 				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, true);
 
-			FDM3<T> test_object_2(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
+			printerheatconduction::FDM3<T> test_object_2(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
 				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, false);
 
-			FDM3<T> test_object_3 = test_object_1;
-			FDM3<T> test_object_4 = test_object_2;
-			FDM3<T> test_object_5 = test_object_1;
+			printerheatconduction::FDM3<T> test_object_3 = test_object_1;
+			printerheatconduction::FDM3<T> test_object_4 = test_object_2;
+			printerheatconduction::FDM3<T> test_object_5 = test_object_1;
 		}
 
 		TEST_METHOD(ComputationPerformers) {
@@ -141,11 +142,11 @@ namespace PrinterOptimizerTests
 
 			T space_step("1.0");
 
-			FDM3<T> test_object_2(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
-				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, true);
+			printerheatconduction::FDM3<T> test_object_2(x_length, y_length, z_length, &disc_x_lines,
+				&disc_y_lines, &disc_z_lines, &disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, true);
 
-			FDM3<T> test_object_3(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
-				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step);
+			printerheatconduction::FDM3<T> test_object_3(x_length, y_length, z_length, &disc_x_lines, 
+				&disc_y_lines, &disc_z_lines, &disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step);
 			
 			// void ProcessComponents(const uint16_t thread_ind);
 			// ignored, thread pool method
@@ -204,8 +205,8 @@ namespace PrinterOptimizerTests
 			//T space_step("0.4");
 			T space_step("1.0");
 
-			FDM3<T> test_object_1(x_length, y_length, z_length, &disc_x_lines, &disc_y_lines, &disc_z_lines,
-				&disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, true);
+			printerheatconduction::FDM3<T> test_object_1(x_length, y_length, z_length, &disc_x_lines, 
+				&disc_y_lines, &disc_z_lines, &disc_x_coeffs, &disc_y_coeffs, &disc_z_coeffs, space_step, true);
 			
 			
 			// T GetTimeStep();
