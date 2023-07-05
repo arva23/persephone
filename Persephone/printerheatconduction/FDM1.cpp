@@ -1,8 +1,8 @@
 #include "FDM1.h"
 
+
 template <class T>
-FDM1<T>::FDM1() : IterativeModel<genmath::Vector<T>, T>(),
-{
+printerheatconduction::FDM1<T>::FDM1() : IterativeModel<genmath::Vector<T>, T>() {
 
 	time_step_ = "1.0";
 	space_step_ = "1.0";
@@ -12,12 +12,11 @@ FDM1<T>::FDM1() : IterativeModel<genmath::Vector<T>, T>(),
 	identity_matrix_ = genmath::TriDiagMatrix<T>(3);
 }
 
-template <class T>
-FDM1<T>::FDM1(genmath::Vector<T>* values, genmath::Vector<T>* coeffs, const T space_step, const T start_time, size_t num_of_fragments)
-	: IterativeModel<genmath::Vector<T>, T>(), 
-{
 
-	
+template <class T>
+printerheatconduction::FDM1<T>::FDM1(genmath::Vector<T>* values, genmath::Vector<T>* coeffs, const T space_step, const T start_time)
+	: IterativeModel<genmath::Vector<T>, T>(){
+
 	if (values->Size() != coeffs->Size())
 		throw std::exception("Sizes of containers are different (values and coefficients) (FDM1).");
 
@@ -100,8 +99,7 @@ FDM1<T>::FDM1(genmath::Vector<T>* values, genmath::Vector<T>* coeffs, const T sp
 }
 
 template <class T>
-FDM1<T>::FDM1(const FDM1<T>& orig) : IterativeModel<genmath::Vector<T>, T>(orig), 
-{
+printerheatconduction::FDM1<T>::FDM1(const FDM1<T>& orig) : IterativeModel<genmath::Vector<T>, T>(orig) {
 
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
@@ -115,15 +113,15 @@ FDM1<T>::FDM1(const FDM1<T>& orig) : IterativeModel<genmath::Vector<T>, T>(orig)
 }
 
 template <class T>
-FDM1<T>::~FDM1(){
+printerheatconduction::FDM1<T>::~FDM1(){
 
 }
 
 template <class T>
-FDM1<T>& FDM1<T>::operator=(const FDM1<T>& orig) {
+printerheatconduction::FDM1<T>& printerheatconduction::FDM1<T>::operator=(const FDM1<T>& orig) {
 
 	IterativeModel<genmath::Vector<T>, T>::operator=(orig);
-
+	
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
 	recent_time_ = orig.recent_time_;
@@ -138,7 +136,33 @@ FDM1<T>& FDM1<T>::operator=(const FDM1<T>& orig) {
 }
 
 template <class T>
-bool FDM1<T>::operator==(const FDM1<T>& orig) const {
+genmath::Vector<T>& printerheatconduction::FDM1<T>::GetRecentValues() { 
+	
+	return *recent_values_; 
+}
+
+template <class T>
+genmath::Vector<T>& printerheatconduction::FDM1<T>::GetCoeffs() { 
+	
+	return *coeffs_; 
+}
+
+template <class T>
+T printerheatconduction::FDM1<T>::GetTime() {
+
+	return recent_time_;
+}
+
+template <class T>
+void printerheatconduction::FDM1<T>::SetTime(const T time) {
+
+	recent_time_ = time;
+}
+
+// INHERITED FUNCTIONS FROM ITERATIVEMODEL
+
+template <class T>
+bool printerheatconduction::FDM1<T>::operator==(const FDM1<T>& orig) const {
 
 	bool equals = true;
 	equals = equals && space_step_ == orig.space_step_;
@@ -155,7 +179,7 @@ bool FDM1<T>::operator==(const FDM1<T>& orig) const {
 }
 
 template <class T>
-genmath::Vector<T>& FDM1<T>::operator++(){
+genmath::Vector<T>& printerheatconduction::FDM1<T>::operator++(){
 
 	genmath::TriDiagMatrix<T> mod_lhs = identity_matrix_ + lhs_operand_.GenLinComb(*coeffs_);
 	genmath::Vector<T> mod_rhs = (identity_matrix_ + rhs_operand_.GenLinComb(*coeffs_)) * (*recent_values_);
@@ -167,7 +191,7 @@ genmath::Vector<T>& FDM1<T>::operator++(){
 }
 
 template <class T>
-genmath::Vector<T> FDM1<T>::operator++(int){
+genmath::Vector<T> printerheatconduction::FDM1<T>::operator++(int){
 	
 	genmath::Vector<T> ret(*recent_values_);
 	genmath::TriDiagMatrix<T> mod_lhs = identity_matrix_ + lhs_operand_.GenLinComb(*coeffs_);
@@ -180,7 +204,7 @@ genmath::Vector<T> FDM1<T>::operator++(int){
 }
 
 template <class T>
-genmath::Vector<T>& FDM1<T>::operator--() {
+genmath::Vector<T>& printerheatconduction::FDM1<T>::operator--() {
 
 	genmath::TriDiagMatrix<T> mod_rhs = identity_matrix_ + rhs_operand_.GenLinComb(*coeffs_);
 	genmath::Vector<T> mod_lhs = (identity_matrix_ + lhs_operand_.GenLinComb(*coeffs_)) * (*recent_values_);
@@ -192,7 +216,7 @@ genmath::Vector<T>& FDM1<T>::operator--() {
 }
 
 template <class T>
-genmath::Vector<T> FDM1<T>::operator--(int) {
+genmath::Vector<T> printerheatconduction::FDM1<T>::operator--(int) {
 
 	genmath::Vector<T> ret(*recent_values_);
 	genmath::TriDiagMatrix<T> mod_rhs = identity_matrix_ + rhs_operand_.GenLinComb(*coeffs_);
@@ -205,7 +229,7 @@ genmath::Vector<T> FDM1<T>::operator--(int) {
 }
 
 template <class T>
-genmath::Vector<T>& FDM1<T>::operator+=(const T duration) {
+genmath::Vector<T>& printerheatconduction::FDM1<T>::operator+=(const T duration) {
 
 	if (T("0.0") >= duration || duration < time_step_) {
 	
@@ -221,7 +245,7 @@ genmath::Vector<T>& FDM1<T>::operator+=(const T duration) {
 }
 
 template <class T>
-genmath::Vector<T>& FDM1<T>::operator-=(const T duration) {
+genmath::Vector<T>& printerheatconduction::FDM1<T>::operator-=(const T duration) {
 
 	if (T("0.0") >= duration || duration < time_step_) {
 	
@@ -239,32 +263,3 @@ genmath::Vector<T>& FDM1<T>::operator-=(const T duration) {
 
 	return *recent_values_;
 }
-
-template <class T>
-genmath::Vector<T>& FDM1<T>::GetRecentValues() { return *recent_values_; }
-
-template <class T>
-genmath::Vector<T>& FDM1<T>::GetCoeffs() { return *coeffs_; }
-
-template <class T>
-T FDM1<T>::GetTime() {
-
-	return recent_time_;
-}
-
-template <class T>
-void FDM1<T>::SetTime(const T time) {
-
-	recent_time_ = time;
-}
-
-template <class T>
-FDM1<T>::operator std::string() {
-
-	std::string serialized_status = std::string(recent_time_) 
-		+ std::string(" ") + std::string(*recent_values_) 
-		+ std::string(" ") + std::string(*coeffs_);
-
-	return serialized_status;
-}
-
