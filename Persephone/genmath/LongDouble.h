@@ -19,6 +19,9 @@ namespace genmath {
 
 		LongDouble();
 		LongDouble(long double data);
+	private:
+		size_t ProcessLiteral(std::string data);
+	public:
 		LongDouble(std::string data);
 		LongDouble(const char* data);
 		LongDouble(const LongDouble& orig);
@@ -61,8 +64,9 @@ namespace genmath {
 		operator std::string() const override;
 		static LongDouble Sqrt(const LongDouble& operand);
 		// assigning input value to the nearest value according to the discreetly generated sequence
-		static LongDouble RawRound(LongDouble value, LongDouble step);
-		static LongDouble Abs(LongDouble operand);
+		static LongDouble RawRound(const LongDouble value, const LongDouble step);
+		static LongDouble Abs(const LongDouble operand);
+		static LongDouble Sgn(const LongDouble operand);
 
 	private:
 		long double data_;
