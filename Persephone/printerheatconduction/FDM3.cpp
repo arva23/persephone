@@ -535,6 +535,17 @@ template <class T>
 	operator_called_ = false;
 }
 
+template <class T>
+[[noreturn]] printerheatconduction::NullObj printerheatconduction::FDM3<T>::operator++(int) {
+
+	return operator++();
+}
+
+template <class T>
+[[noreturn]] printerheatconduction::NullObj printerheatconduction::FDM3<T>::operator--(int) {
+
+	return operator--();
+}
 
 template <class T>
 [[noreturn]] printerheatconduction::NullObj& printerheatconduction::FDM3<T>::operator+=(const T duration) {

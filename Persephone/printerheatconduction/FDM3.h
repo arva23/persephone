@@ -81,6 +81,15 @@ namespace printerheatconduction {
 		/// </summary>
 		[[noreturn]] NullObj& operator--() override;
 
+		/// <summary>
+		/// simulate the system forward with one time step (postincrement)
+		/// </summary>
+		[[noreturn]] NullObj operator++(int) override;
+
+		/// <summary>
+		/// simulate the system backward with one time step (postincrement)
+		/// </summary>
+		[[noreturn]] NullObj operator--(int) override;
 
 		/// <summary>
 		/// simulate the system forward with predefined duration, the simulation stops if the simulation 
