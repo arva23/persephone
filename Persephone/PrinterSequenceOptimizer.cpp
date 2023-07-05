@@ -801,8 +801,9 @@ void PrinterSequenceOptimizer::InitiateThermalSimulation() {
 	heat_map_time_frames_coeffs_.push_back(disc_z_lines_coeffs_);// inserting first heat space status
 
 	// creating new spatial simulation model
-	thermal_space_model_ = FDM3<genmath::LongDouble>(x_len_, y_len_, z_len_, &disc_x_lines_, &disc_y_lines_,
-		&disc_z_lines_, &disc_x_lines_coeffs_, &disc_y_lines_coeffs_, &disc_z_lines_coeffs_, unit_space_step_);
+	thermal_space_model_ = printerheatconduction::FDM3<genmath::LongDouble>(x_len_, y_len_, z_len_,
+		&disc_x_lines_, &disc_y_lines_, &disc_z_lines_, &disc_x_lines_coeffs_, &disc_y_lines_coeffs_, 
+		&disc_z_lines_coeffs_, unit_space_step_);
 
 	program_console_.Println("Heat map and FDM3 init. was successful.");
 }

@@ -173,7 +173,7 @@ private:
 	genmath::LongDouble unit_time_step_;
 	// spatial thermal model of loaded model and its cuboid surrounding environment
 
-	FDM3<genmath::LongDouble> thermal_space_model_;
+	printerheatconduction::FDM3<genmath::LongDouble> thermal_space_model_;
 	// simulation statuses by unit time steps [<time frame>][<planar line>][<line value>]
 	std::vector<std::vector<genmath::Vector<genmath::LongDouble> > > heat_map_time_frames_;
 	std::vector<std::vector<genmath::Vector<genmath::LongDouble> > > heat_map_time_frames_coeffs_;
