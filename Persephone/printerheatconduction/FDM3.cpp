@@ -1,9 +1,9 @@
 #include "FDM3.h"
 
 // 3D FINITE DIFFERENCE METHOD
+
 template <class T>
-FDM3<T>::FDM3() : IterativeModel<NullObj, T>(), 
-{
+printerheatconduction::FDM3<T>::FDM3() : IterativeModel<NullObj, T>() {
 
 	operate_fdm_ = true;
 	suspend_sim_ = false;
@@ -12,10 +12,8 @@ FDM3<T>::FDM3() : IterativeModel<NullObj, T>(),
 	operator_called_ = false;
 }
 
-
-
 template <class T>
-FDM3<T>::FDM3(const size_t x_length,
+printerheatconduction::FDM3<T>::FDM3(const size_t x_length,
 	const size_t y_length,
 	const size_t z_length,
 	std::vector<genmath::Vector<T> >* x_values,
@@ -26,8 +24,7 @@ FDM3<T>::FDM3(const size_t x_length,
 	std::vector<genmath::Vector<T> >* z_coeffs,
 	const T space_step,
 	const bool force_non_parallel,
-	size_t num_of_fragments) : IterativeModel<NullObj, T>(),
-{
+	size_t num_of_fragments) : IterativeModel<NullObj, T>() {
 
 	space_step_ = space_step;
 	// MATHEMATICAL OPTIMIZATION: set possible maximal coefficient value for numerical stability increase
@@ -86,10 +83,8 @@ FDM3<T>::FDM3(const size_t x_length,
 	direction_ = true;
 }
 
-
 template <class T>
-FDM3<T>::FDM3(const FDM3<T>& orig) : IterativeModel<NullObj, T>(orig),
-{
+printerheatconduction::FDM3<T>::FDM3(const FDM3<T>& orig) : IterativeModel<NullObj, T>(orig) {
 
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
@@ -119,12 +114,11 @@ FDM3<T>::FDM3(const FDM3<T>& orig) : IterativeModel<NullObj, T>(orig),
 			exec_threads_.push_back(std::thread(&FDM3::ProcessComponents, this, id));
 }
 
-
 template <class T>
-FDM3<T>& FDM3<T>::operator=(const FDM3<T>& orig) {
+printerheatconduction::FDM3<T>& printerheatconduction::FDM3<T>::operator=(const FDM3<T>& orig) {
 
 	IterativeModel<NullObj, T>::operator=(orig);
-
+	
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
 	recent_time_ = orig.recent_time_;
@@ -156,9 +150,8 @@ FDM3<T>& FDM3<T>::operator=(const FDM3<T>& orig) {
 	return *this;
 }
 
-
 template <class T>
-FDM3<T>::~FDM3() {
+printerheatconduction::FDM3<T>::~FDM3() {
 
 	if (no_concurrent_threads_) {
 
@@ -174,10 +167,9 @@ FDM3<T>::~FDM3() {
 	}
 }
 
-
 // thread pool method
 template <class T>
-void FDM3<T>::ProcessComponents(const uint16_t thread_ind) {
+void printerheatconduction::FDM3<T>::ProcessComponents(const uint16_t thread_ind) {
 
 	size_t start_fdm1_x_ind, end_fdm1_x_ind;
 	size_t start_fdm1_y_ind, end_fdm1_y_ind;
@@ -308,9 +300,8 @@ void FDM3<T>::ProcessComponents(const uint16_t thread_ind) {
 	}
 }
 
-
 template <class T>
-[[noreturn]] NullObj& FDM3<T>::operator++() {
+[[noreturn]] printerheatconduction::NullObj& printerheatconduction::FDM3<T>::operator++() {
 
 	direction_ = true;
 	operator_called_ = true;
@@ -427,9 +418,8 @@ template <class T>
 	operator_called_ = false;
 }
 
-
 template <class T>
-[[noreturn]] NullObj& FDM3<T>::operator--() {
+[[noreturn]] printerheatconduction::NullObj& printerheatconduction::FDM3<T>::operator--() {
 
 	direction_ = false;
 	operator_called_ = true;
@@ -547,7 +537,7 @@ template <class T>
 
 
 template <class T>
-[[noreturn]] NullObj& FDM3<T>::operator+=(const T duration) {
+[[noreturn]] printerheatconduction::NullObj& printerheatconduction::FDM3<T>::operator+=(const T duration) {
 
 	if (T("0.0") >= duration || duration < time_step_) {
 
@@ -562,9 +552,8 @@ template <class T>
 	return null_val_;
 }
 
-
 template <class T>
-[[noreturn]] NullObj& FDM3<T>::operator-=(const T duration) {
+[[noreturn]] printerheatconduction::NullObj& printerheatconduction::FDM3<T>::operator-=(const T duration) {
 
 	if (T("0.0") >= duration || duration < time_step_) {
 
@@ -583,44 +572,38 @@ template <class T>
 	return null_val_;
 }
 
-
 template <class T>
-T FDM3<T>::GetTimeStep() {
+T printerheatconduction::FDM3<T>::GetTimeStep() {
 
 	return time_step_;
 }
 
-
 template <class T>
-T FDM3<T>::GetTime() {
+T printerheatconduction::FDM3<T>::GetTime() {
 
 	return recent_time_;
 }
 
-
 template <class T>
-void FDM3<T>::SetTime(const T time) {
+void printerheatconduction::FDM3<T>::SetTime(const T time) {
 
 	recent_time_ = time;
 }
 
-
 template <class T>
-void FDM3<T>::SuspendSimulation() {
+void printerheatconduction::FDM3<T>::SuspendSimulation() {
 
 	suspend_sim_ = true;
 }
 
-
 template <class T>
-void FDM3<T>::ContinueSimulation() {
+void printerheatconduction::FDM3<T>::ContinueSimulation() {
 
 	suspend_sim_ = false;
 }
 
-
 template <class T>
-void FDM3<T>::StopSimulation() {
+void printerheatconduction::FDM3<T>::StopSimulation() {
 
 	if (operate_fdm_) {
 
@@ -638,32 +621,8 @@ void FDM3<T>::StopSimulation() {
 	}
 }
 
-
-
 template <class T>
-FDM3<T>::operator std::string() {
-
-	std::string serialized_status = std::string(recent_time_)
-		+ std::string(" ") + std::to_string(x_length_)
-		+ std::string(" ") + std::to_string(y_length_)
-		+ std::string(" ") + std::to_string(z_length_);
-
-	for (size_t x = 0; x < x_length_; ++x)
-		serialized_status += std::string(" ") + std::string(x_components_[x]);
-
-	for (size_t y = 0; y < y_length_; ++y)
-		serialized_status += std::string(" ") + std::string(y_components_[y]);
-
-	for (size_t z = 0; z < z_length_; ++z)
-		serialized_status += std::string(" ") + std::string(z_components_[z]);
-
-	return serialized_status;
-}
-
-
-
-template <class T>
-void FDM3<T>::UpdateXObjects() {
+void printerheatconduction::FDM3<T>::UpdateXObjects() {
 
 	for (size_t z = 0; z < z_length_; ++z) {
 
@@ -678,9 +637,8 @@ void FDM3<T>::UpdateXObjects() {
 	}
 }
 
-
 template <class T>
-void FDM3<T>::UpdateYObjects() {
+void printerheatconduction::FDM3<T>::UpdateYObjects() {
 
 	for (size_t z = 0; z < z_length_; ++z) {
 
@@ -695,9 +653,8 @@ void FDM3<T>::UpdateYObjects() {
 	}
 }
 
-
 template <class T>
-void FDM3<T>::UpdateZObjects() {
+void printerheatconduction::FDM3<T>::UpdateZObjects() {
 
 	for (size_t x = 0; x < x_length_; ++x) {
 
