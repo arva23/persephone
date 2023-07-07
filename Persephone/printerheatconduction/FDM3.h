@@ -12,7 +12,7 @@
 #include <exception>
 #include <type_traits>
 
-#include "IterativeModel.h"
+#include "../genmath/IterativeModel.h"
 #include "../genmath/LongDouble.h"
 #include "../genmath/Vector.h"
 #include "../genmath/QMatrix.h"
@@ -25,7 +25,7 @@ namespace printerheatconduction {
 
 	// implements Crank-Nicolson method in 3D
 	template <class T>
-	class FDM3 : public IterativeModel<NullObj, T> {
+	class FDM3 : public genmath::IterativeModel<NullObj, T> {
 
 	public:
 		FDM3();
@@ -58,8 +58,7 @@ namespace printerheatconduction {
 			std::vector<genmath::Vector<T> >* y_coeffs,
 			std::vector<genmath::Vector<T> >* z_coeffs,
 			const T space_step,
-			const bool force_non_parallel = false,
-			size_t num_of_fragments = 1);
+			const bool force_non_parallel = false);
 
 		FDM3(const FDM3<T>& orig);
 
@@ -71,6 +70,7 @@ namespace printerheatconduction {
 
 
 		// OVERRIDED FUNCTIONS OF INTERATIVEMODEL BASE CLASS
+
 		/// <summary>
 		/// simulate the system forward with one time step (preincrement)
 		/// </summary>
@@ -150,10 +150,6 @@ namespace printerheatconduction {
 		std::vector<genmath::Vector<T> >* y_coeffs_;
 		std::vector<genmath::Vector<T> >* z_coeffs_;
 
-		std::atomic_uint8_t recent_model_accessibility_;// previous lock value
-		std::atomic_uint8_t model_accessibility_;// for external lock of model data processing
-		std::mutex[3] leveled_sequential_mutexes_;
-		std::unique_lock<std::mutex>[3] leveled_sequential_locks_;
 		std::vector<FDM1<T> > x_components_;// x coordinate component of gradient
 		std::vector<FDM1<T> > y_components_;// y coordinate component of gradient
 		std::vector<FDM1<T> > z_components_;// z coordinate component of gradient
@@ -169,4 +165,4 @@ namespace printerheatconduction {
 
 
 template class printerheatconduction::FDM3<genmath::LongDouble>;
-template class IterativeModel<printerheatconduction::NullObj, genmath::LongDouble>;
+template class genmath::IterativeModel<printerheatconduction::NullObj, genmath::LongDouble>;

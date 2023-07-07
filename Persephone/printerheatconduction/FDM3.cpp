@@ -3,7 +3,8 @@
 // 3D FINITE DIFFERENCE METHOD
 
 template <class T>
-printerheatconduction::FDM3<T>::FDM3() : IterativeModel<NullObj, T>() {
+printerheatconduction::FDM3<T>::FDM3() 
+	: genmath::IterativeModel<NullObj, T>() {
 
 	operate_fdm_ = true;
 	suspend_sim_ = false;
@@ -23,8 +24,8 @@ printerheatconduction::FDM3<T>::FDM3(const size_t x_length,
 	std::vector<genmath::Vector<T> >* y_coeffs,
 	std::vector<genmath::Vector<T> >* z_coeffs,
 	const T space_step,
-	const bool force_non_parallel,
-	size_t num_of_fragments) : IterativeModel<NullObj, T>() {
+	const bool force_non_parallel) 
+	: genmath::IterativeModel<NullObj, T>() {
 
 	space_step_ = space_step;
 	// MATHEMATICAL OPTIMIZATION: set possible maximal coefficient value for numerical stability increase
@@ -84,7 +85,8 @@ printerheatconduction::FDM3<T>::FDM3(const size_t x_length,
 }
 
 template <class T>
-printerheatconduction::FDM3<T>::FDM3(const FDM3<T>& orig) : IterativeModel<NullObj, T>(orig) {
+printerheatconduction::FDM3<T>::FDM3(const FDM3<T>& orig) 
+	: genmath::IterativeModel<NullObj, T>(orig) {
 
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
@@ -117,7 +119,7 @@ printerheatconduction::FDM3<T>::FDM3(const FDM3<T>& orig) : IterativeModel<NullO
 template <class T>
 printerheatconduction::FDM3<T>& printerheatconduction::FDM3<T>::operator=(const FDM3<T>& orig) {
 
-	IterativeModel<NullObj, T>::operator=(orig);
+	genmath::IterativeModel<NullObj, T>::operator=(orig);
 	
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;

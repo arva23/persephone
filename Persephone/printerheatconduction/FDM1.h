@@ -6,7 +6,7 @@
 #include <exception>
 #include <type_traits>
 
-#include "IterativeModel.h"
+#include "../genmath/IterativeModel.h"
 #include "../genmath/LongDouble.h"
 #include "../genmath/Vector.h"
 #include "../genmath/QMatrix.h"
@@ -16,7 +16,7 @@ namespace printerheatconduction {
 
 	// one dimensional Finite Difference Method using Crank - Nicolson method
 	template <class T>
-	class FDM1 : public IterativeModel<genmath::Vector<T>, T> {
+	class FDM1 : public genmath::IterativeModel<genmath::Vector<T>, T> {
 
 	public:
 		FDM1();
@@ -45,9 +45,10 @@ namespace printerheatconduction {
 
 		void SetTime(T time);
 
-		// INHERITED FUNCTIONS FROM ITERATIVEMODEL
-
 		bool operator==(const FDM1<T>& orig) const;
+
+
+		// INHERITED FUNCTIONS FROM ITERATIVEMODEL
 
 		/// <summary>
 		/// prefix stepping the simulation by defined time step
@@ -101,4 +102,4 @@ namespace printerheatconduction {
 }
 
 template class printerheatconduction::FDM1<genmath::LongDouble>;
-template class IterativeModel<genmath::Vector<genmath::LongDouble>, genmath::LongDouble>;
+template class genmath::IterativeModel<genmath::Vector<genmath::LongDouble>, genmath::LongDouble>;

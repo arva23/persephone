@@ -2,7 +2,8 @@
 
 
 template <class T>
-printerheatconduction::FDM1<T>::FDM1() : IterativeModel<genmath::Vector<T>, T>() {
+printerheatconduction::FDM1<T>::FDM1() 
+	: genmath::IterativeModel<genmath::Vector<T>, T>() {
 
 	time_step_ = "1.0";
 	space_step_ = "1.0";
@@ -14,8 +15,9 @@ printerheatconduction::FDM1<T>::FDM1() : IterativeModel<genmath::Vector<T>, T>()
 
 
 template <class T>
-printerheatconduction::FDM1<T>::FDM1(genmath::Vector<T>* values, genmath::Vector<T>* coeffs, const T space_step, const T start_time)
-	: IterativeModel<genmath::Vector<T>, T>(){
+printerheatconduction::FDM1<T>::FDM1(genmath::Vector<T>* values, genmath::Vector<T>* coeffs,
+	const T space_step, const T start_time)
+	: genmath::IterativeModel<genmath::Vector<T>, T>(){
 
 	if (values->Size() != coeffs->Size())
 		throw std::exception("Sizes of containers are different (values and coefficients) (FDM1).");
@@ -99,7 +101,8 @@ printerheatconduction::FDM1<T>::FDM1(genmath::Vector<T>* values, genmath::Vector
 }
 
 template <class T>
-printerheatconduction::FDM1<T>::FDM1(const FDM1<T>& orig) : IterativeModel<genmath::Vector<T>, T>(orig) {
+printerheatconduction::FDM1<T>::FDM1(const FDM1<T>& orig) 
+	: genmath::IterativeModel<genmath::Vector<T>, T>(orig) {
 
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
@@ -120,7 +123,7 @@ printerheatconduction::FDM1<T>::~FDM1(){
 template <class T>
 printerheatconduction::FDM1<T>& printerheatconduction::FDM1<T>::operator=(const FDM1<T>& orig) {
 
-	IterativeModel<genmath::Vector<T>, T>::operator=(orig);
+	genmath::IterativeModel<genmath::Vector<T>, T>::operator=(orig);
 	
 	space_step_ = orig.space_step_;
 	time_step_ = orig.time_step_;
