@@ -1,15 +1,15 @@
 #include "QMatrix.h"
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 char genmath::QMatrix<T>::DelimChar = '|';
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::QMatrix() : Matrix<T>(), ObjectBase(){
 
 	size_ = 0;
 	Matrix<T>::data_type_ = 1;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::QMatrix(size_t dim) : Matrix<T>(dim, dim), ObjectBase() {
 
 	size_ = dim;
@@ -17,14 +17,14 @@ genmath::QMatrix<T>::QMatrix(size_t dim) : Matrix<T>(dim, dim), ObjectBase() {
 	Matrix<T>::data_type_ = 1;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::QMatrix(std::string data) : ObjectBase(){
 
 	operator=(data);
 	Matrix<T>::data_type_ = 1;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::QMatrix(std::vector<std::vector<T> >& data, bool force_invertable) : Matrix<T>(data), ObjectBase() {
 
 	if (data.size() != data[0].size())
@@ -38,7 +38,7 @@ genmath::QMatrix<T>::QMatrix(std::vector<std::vector<T> >& data, bool force_inve
 		throw std::exception("Determinant is zero (QMatrix).");
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::QMatrix(std::vector<Vector<T> >& data, bool force_invertable) : Matrix<T>(data), ObjectBase(){
 
 	if (data.size() != data[0].Size())
@@ -52,16 +52,16 @@ genmath::QMatrix<T>::QMatrix(std::vector<Vector<T> >& data, bool force_invertabl
 		throw std::exception("Determinant is zero (QMatrix).");
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::QMatrix(const QMatrix<T>& orig) : Matrix<T>(orig), ObjectBase(orig) {
 
 	size_ = orig.size_;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::~QMatrix() {}
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>& genmath::QMatrix<T>::operator=(const QMatrix<T>& orig) {
 
 	ObjectBase::operator=(orig);
@@ -72,13 +72,13 @@ genmath::QMatrix<T>& genmath::QMatrix<T>::operator=(const QMatrix<T>& orig) {
 	return *this;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::QMatrix<T>::GetData() const {
 
 	return Matrix<T>::GetData();
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::QMatrix<T>::operator=(std::string param) {
 
 	if (param.size() == 0)
@@ -120,25 +120,25 @@ bool genmath::QMatrix<T>::operator=(std::string param) {
 	}
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::QMatrix<T>::GetColumnVecs() const {
 
 	return Matrix<T>::GetColumnVecs();
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::QMatrix<T>::GetRowVecs() const {
 	
 	return Matrix<T>::data_; 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 size_t genmath::QMatrix<T>::GetDim() const {
 	
 	return size_; 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>& genmath::QMatrix<T>::operator[](size_t ind) {
 
 	if (Matrix<T>::data_type_ == 2) throw std::exception("Object type is tridiagonal (operator[]) (QMatrix).");
@@ -149,7 +149,7 @@ genmath::Vector<T>& genmath::QMatrix<T>::operator[](size_t ind) {
 	return Matrix<T>::data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 const genmath::Vector<T>& genmath::QMatrix<T>::operator[](size_t ind) const {
 
 	if (ind >= size_)
@@ -158,7 +158,7 @@ const genmath::Vector<T>& genmath::QMatrix<T>::operator[](size_t ind) const {
 	return Matrix<T>::data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 T genmath::QMatrix<T>::GetDet() {
 
 	if (size_ == 0) {
@@ -190,7 +190,7 @@ T genmath::QMatrix<T>::GetDet() {
 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T> genmath::QMatrix<T>::GaussElim(size_t& no_row_swaps, const Vector<T>& operand) const {
 
 	if (operand.Size() != size_)
@@ -246,27 +246,27 @@ genmath::Matrix<T> genmath::QMatrix<T>::GaussElim(size_t& no_row_swaps, const Ve
 	return copy_mtx;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T> genmath::QMatrix<T>::GaussElim(const Vector<T>& operand) const {
 
 	size_t no_row_swaps = 0;
 	return this->GaussElim(no_row_swaps, operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::QMatrix<T>::SolveGauss(const Vector<T>& operand) const {
 
 	return this->GaussElim(operand).BackwSubst();
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::QMatrix<T>::operator==(const QMatrix<T>& operand) const { return Matrix<T>::operator==(operand); }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::QMatrix<T>::operator!=(const QMatrix<T>& operand) const { return Matrix<T>::operator!=(operand); }
 
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::QMatrix<T>::operator+=(const QMatrix<T>& operand) {
 
 	if (Matrix<T>::data_type_ == 2) throw std::exception("Object type is tridiagonal (unary addition) (QMatrix).");
@@ -274,7 +274,7 @@ void genmath::QMatrix<T>::operator+=(const QMatrix<T>& operand) {
 	Matrix<T>::operator+=(operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::QMatrix<T>::operator-=(const QMatrix<T>& operand) {
 	
 	if (Matrix<T>::data_type_ == 2) throw std::exception("Object type is tridiagonal (unary subtraction) (QMatrix).");
@@ -282,14 +282,14 @@ void genmath::QMatrix<T>::operator-=(const QMatrix<T>& operand) {
 	Matrix<T>::operator-=(operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::QMatrix<T>::operator*=(const QMatrix<T>& operand) {
 
 	if (Matrix<T>::data_type_ == 2) throw std::exception("Object type is tridiagonal (unary multiplication) (QMatrix).");
 	Matrix<T>::operator*=(operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T> genmath::QMatrix<T>::operator+(const QMatrix<T>& operand) const {
 
 	QMatrix<T> mtx_ret(*this);
@@ -297,7 +297,7 @@ genmath::QMatrix<T> genmath::QMatrix<T>::operator+(const QMatrix<T>& operand) co
 	return mtx_ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T> genmath::QMatrix<T>::operator-(const QMatrix<T>& operand) const {
 
 	QMatrix<T> mtx_ret(*this);
@@ -305,7 +305,7 @@ genmath::QMatrix<T> genmath::QMatrix<T>::operator-(const QMatrix<T>& operand) co
 	return mtx_ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T> genmath::QMatrix<T>::operator*(const QMatrix<T>& operand) const {
 	
 	QMatrix<T> mtx_ret(*this);
@@ -313,13 +313,13 @@ genmath::QMatrix<T> genmath::QMatrix<T>::operator*(const QMatrix<T>& operand) co
 	return mtx_ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::QMatrix<T>::operator*(const Vector<T>& operand) const {
 
 	return Matrix<T>::operator*(operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T> genmath::QMatrix<T>::GenLinComb(const Vector<T>& operand) const {
 
 	QMatrix<T>* mtx_op = new QMatrix<T>(*this);
@@ -331,7 +331,7 @@ genmath::QMatrix<T> genmath::QMatrix<T>::GenLinComb(const Vector<T>& operand) co
 	return mtx_ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::QMatrix<T>::operator std::string() const {
 
 	return Matrix<T>::operator std::string();

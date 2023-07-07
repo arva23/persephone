@@ -5,12 +5,14 @@
 #include "ObjectBase.h"
 #include "LongDouble.h"
 #include "Vector.h"
+#include "arithmetically_operable.h"
+
 // maybe should use mixin class compositions as aggregates instead of inheritance
 // inheritance creates the problems of super call, ellipse-circle problems
 
 namespace genmath {
 
-	template <class T>
+	template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 	class Matrix : public ObjectBase {
 
 	public:
@@ -61,6 +63,5 @@ namespace genmath {
 		std::vector<Vector<T> > data_;
 	};
 }
-
 
 template class genmath::Matrix<genmath::LongDouble>;

@@ -1,40 +1,40 @@
 #include "Vector.h"
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 char genmath::Vector<T>::DelimChar = ' ';// ObjectBase::GenerateDelimiterCharacter();
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector() : ObjectBase() {
 	
 	size_ = 0;  data_ = std::vector<T>(); 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector(size_t dim) : ObjectBase() {
 
 	size_ = dim;
 	data_ = std::vector<T>(dim, T());
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector(std::string data) : ObjectBase() {
 
 	this->operator=(data);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector(size_t size, T gen_data) : ObjectBase() {
 
 	data_ = std::vector<T>(size, gen_data);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector(std::vector<T> data) : ObjectBase() {
 	
 	size_ = data.size(); 
 	data_ = data; 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector(size_t size, T* data) : ObjectBase() {
 
 	size_ = size;
@@ -43,17 +43,17 @@ genmath::Vector<T>::Vector(size_t size, T* data) : ObjectBase() {
 		data_.push_back(data[i]);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::Vector(const Vector& orig) : ObjectBase(orig) {
 	
 	size_ = orig.size_; 
 	data_ = orig.data_; 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::~Vector() {}
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>& genmath::Vector<T>::operator=(const Vector<T>& orig) {
 
 	ObjectBase::operator=(orig);
@@ -62,7 +62,7 @@ genmath::Vector<T>& genmath::Vector<T>::operator=(const Vector<T>& orig) {
 	return *this;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::Vector<T>::operator=(std::string data) {
 
 	if (data.size() == 0)
@@ -89,7 +89,7 @@ bool genmath::Vector<T>::operator=(std::string data) {
 	return len > 0 ? false : true;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::Vector<T>::operator==(const Vector<T>& operand)const{
 
 	if (operand.Size() != size_)
@@ -103,7 +103,7 @@ bool genmath::Vector<T>::operator==(const Vector<T>& operand)const{
 	return p;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::Vector<T>::operator!=(const Vector<T>& operand)const{
 
 	if (operand.Size() != size_)
@@ -117,7 +117,7 @@ bool genmath::Vector<T>::operator!=(const Vector<T>& operand)const{
 	return p;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Vector<T>::operator +=(const Vector<T>& operand) {
 	
 	if(operand.Size() != size_)
@@ -127,7 +127,7 @@ void genmath::Vector<T>::operator +=(const Vector<T>& operand) {
 		data_[i] += operand.data_[i];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Vector<T>::operator -=(const Vector<T>& operand) {
 
 	if (operand.Size() != size_)
@@ -137,7 +137,7 @@ void genmath::Vector<T>::operator -=(const Vector<T>& operand) {
 		data_[i] -= operand.data_[i];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::Vector<T>::operator+(const Vector<T>& operand) const {
 
 	if (size_ != operand.Size())
@@ -151,7 +151,7 @@ genmath::Vector<T> genmath::Vector<T>::operator+(const Vector<T>& operand) const
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::Vector<T>::operator-(const Vector<T>& operand) const {
 	
 	if (size_ != operand.Size())
@@ -165,7 +165,7 @@ genmath::Vector<T> genmath::Vector<T>::operator-(const Vector<T>& operand) const
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 T genmath::Vector<T>::operator*(const Vector<T>& operand) const {
 
 	if (operand.Size() != size_)
@@ -179,7 +179,7 @@ T genmath::Vector<T>::operator*(const Vector<T>& operand) const {
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::Vector<T>::operator*(const T& scalar) const {
 
 	Vector<T> ret(*this);
@@ -190,7 +190,7 @@ genmath::Vector<T> genmath::Vector<T>::operator*(const T& scalar) const {
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>::operator std::string() const{
 
 	if (size_ == 0) return std::string("");
@@ -204,16 +204,16 @@ genmath::Vector<T>::operator std::string() const{
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<T> genmath::Vector<T>::GetData() const { return data_; }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Vector<T>::PushBack(const T& value) {
 
 	data_.push_back(value);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 T genmath::Vector<T>::PopBack() {
 
 	if (data_.empty()) throw std::exception("Empty Vector object container (Vector).");
@@ -223,7 +223,7 @@ T genmath::Vector<T>::PopBack() {
 	return value;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::Vector<T>::HadamardProd(const Vector<T>& operand) {
 
 	size_t size_of_operand = operand.data_.size();
@@ -239,25 +239,25 @@ genmath::Vector<T> genmath::Vector<T>::HadamardProd(const Vector<T>& operand) {
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 T& genmath::Vector<T>::operator[](size_t ind) {
 
 	if (ind >= data_.size())
 		throw std::exception("Vector dimension mismatch (Vector).");
-
+	
 	return data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 const T& genmath::Vector<T>::operator[](size_t ind) const {
 
 	if (ind >= data_.size())
 		throw std::exception("Vector dimension mismatch (Vector).");
-
+	
 	return data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 size_t genmath::Vector<T>::Size() const {
 	
 	return data_.size(); 

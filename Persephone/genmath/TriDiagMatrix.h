@@ -6,10 +6,12 @@
 #include "LongDouble.h"
 #include "Vector.h"
 #include "QMatrix.h"
+#include <type_traits>
+#include "arithmetically_operable.h"
 
 namespace genmath {
 
-	template <class T>
+	template <class T> requires std::totally_ordered<T>&& arithmetically_operable<T>
 	class TriDiagMatrix : public QMatrix<T>, public ObjectBase {
 
 	public:

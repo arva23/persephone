@@ -1,9 +1,9 @@
 #include "Matrix.h"
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 char genmath::Matrix<T>::DelimChar = '|';//ObjectBase::GenerateDelimiterCharacter();// sfinae
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::Matrix() : ObjectBase() {
 
 	no_rows_ = 0;
@@ -12,7 +12,7 @@ genmath::Matrix<T>::Matrix() : ObjectBase() {
 	data_type_ = 0;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::Matrix(size_t no_rows, size_t no_cols) : ObjectBase() {
 
 	no_rows_ = no_rows;
@@ -25,7 +25,7 @@ genmath::Matrix<T>::Matrix(size_t no_rows, size_t no_cols) : ObjectBase() {
 	data_type_ = 0;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::Matrix<T>(std::string data) : ObjectBase() {
 
 	operator=(data);
@@ -33,7 +33,7 @@ genmath::Matrix<T>::Matrix<T>(std::string data) : ObjectBase() {
 	data_type_ = 0;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::Matrix(std::vector<std::vector<T> >& data) : ObjectBase() {
 
 	no_rows_ = data.size();
@@ -57,7 +57,7 @@ genmath::Matrix<T>::Matrix(std::vector<std::vector<T> >& data) : ObjectBase() {
 	data_type_ = 0;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::Matrix(std::vector<Vector<T> >& data) : ObjectBase() {
 
 	no_rows_ = data.size();
@@ -81,7 +81,7 @@ genmath::Matrix<T>::Matrix(std::vector<Vector<T> >& data) : ObjectBase() {
 	data_type_ = 0;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::Matrix<T>(const Matrix<T>& orig) : ObjectBase(orig) {
 
 	no_rows_ = orig.no_rows_;
@@ -90,12 +90,12 @@ genmath::Matrix<T>::Matrix<T>(const Matrix<T>& orig) : ObjectBase(orig) {
 	data_type_ = orig.data_type_;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::~Matrix() {
 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>& genmath::Matrix<T>::operator=(const Matrix<T>& orig) {
 
 	ObjectBase::operator=(orig);
@@ -108,13 +108,13 @@ genmath::Matrix<T>& genmath::Matrix<T>::operator=(const Matrix<T>& orig) {
 	return *this;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::Matrix<T>::GetData() const {
 
 	return data_;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::Matrix<T>::operator=(std::string param) {
 
 	if (param.size() == 0)
@@ -157,7 +157,7 @@ bool genmath::Matrix<T>::operator=(std::string param) {
 	}
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::Matrix<T>::GetColumnVecs() const {
 
 	std::vector<Vector<T> > ret(no_cols_, Vector<T>(no_rows_));
@@ -169,13 +169,13 @@ std::vector<genmath::Vector<T> > genmath::Matrix<T>::GetColumnVecs() const {
 	return ret;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::Matrix<T>::GetRowVecs() const { return data_; }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::pair<size_t, size_t> genmath::Matrix<T>::GetDims() const { return std::pair<size_t, size_t>(no_rows_, no_cols_); }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T>& genmath::Matrix<T>::operator[](size_t ind){
 
 	if (ind >= no_rows_)
@@ -184,7 +184,7 @@ genmath::Vector<T>& genmath::Matrix<T>::operator[](size_t ind){
 	return data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 const genmath::Vector<T>& genmath::Matrix<T>::operator[](size_t ind) const {
 
 	if (ind >= no_rows_)
@@ -193,7 +193,7 @@ const genmath::Vector<T>& genmath::Matrix<T>::operator[](size_t ind) const {
 	return data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::Matrix<T>::operator==(const Matrix<T>& operand) const {
 
 	if (no_rows_ != operand.no_rows_ || no_cols_ != operand.no_cols_)
@@ -207,11 +207,11 @@ bool genmath::Matrix<T>::operator==(const Matrix<T>& operand) const {
 	return equals;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::Matrix<T>::operator!=(const Matrix<T>& operand) const { return data_ != operand.data_; }
 
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Matrix<T>::operator+=(const Matrix<T>& operand) {
 
 	if (operand.no_rows_ != no_rows_ || operand.no_cols_ != no_cols_)
@@ -221,7 +221,7 @@ void genmath::Matrix<T>::operator+=(const Matrix<T>& operand) {
 		data_[i] += operand.data_[i];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Matrix<T>::operator-=(const Matrix<T>& operand) {
 
 	if (operand.no_rows_ != no_rows_ || operand.no_cols_ != no_cols_)
@@ -231,7 +231,7 @@ void genmath::Matrix<T>::operator-=(const Matrix<T>& operand) {
 		data_[i] -= operand.data_[i];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Matrix<T>::operator*=(const Matrix<T>& operand) {
 	
 	if (no_cols_ != operand.no_rows_)
@@ -249,7 +249,7 @@ void genmath::Matrix<T>::operator*=(const Matrix<T>& operand) {
 	data_ = res.data_;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T> genmath::Matrix<T>::operator+(const Matrix<T>& operand) const {
 
 	if (operand.no_rows_ != no_rows_ || operand.no_cols_ != no_cols_)
@@ -263,7 +263,7 @@ genmath::Matrix<T> genmath::Matrix<T>::operator+(const Matrix<T>& operand) const
 	return res;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T> genmath::Matrix<T>::operator-(const Matrix<T>& operand) const {
 
 	if (operand.no_rows_ != no_rows_ || operand.no_cols_ != no_cols_)
@@ -277,7 +277,7 @@ genmath::Matrix<T> genmath::Matrix<T>::operator-(const Matrix<T>& operand) const
 	return res;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T> genmath::Matrix<T>::operator*(const Matrix<T>& operand) const {
 
 	if (no_cols_ != operand.no_rows_)
@@ -293,7 +293,7 @@ genmath::Matrix<T> genmath::Matrix<T>::operator*(const Matrix<T>& operand) const
 	return ret_mtx;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::Matrix<T>::operator*(const Vector<T>& operand) const {
 
 	if (operand.Size() != no_cols_)
@@ -308,7 +308,7 @@ genmath::Vector<T> genmath::Matrix<T>::operator*(const Vector<T>& operand) const
 	return res;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::Matrix<T>::BackwSubst() {
 
 	// https://algowiki-project.org/en/Backward_substitution
@@ -333,7 +333,7 @@ genmath::Vector<T> genmath::Matrix<T>::BackwSubst() {
 	return vec_res;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::Matrix<T>::GenLinCombImplicit(const Vector<T>& operand) {
 
 	if (operand.Size() != no_cols_)
@@ -344,7 +344,7 @@ void genmath::Matrix<T>::GenLinCombImplicit(const Vector<T>& operand) {
 			data_[i][j] = data_[i][j] * operand[j];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T> genmath::Matrix<T>::GenLinComb(const Vector<T>& operand) const {
 
 	Matrix<T> mtx_ret(*this);
@@ -353,7 +353,7 @@ genmath::Matrix<T> genmath::Matrix<T>::GenLinComb(const Vector<T>& operand) cons
 }
 
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Matrix<T>::operator std::string() const {
 
 	if (no_rows_ == 0) return std::string("");

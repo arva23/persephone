@@ -7,11 +7,13 @@
 #include "LongDouble.h"
 #include "Vector.h"
 #include "Matrix.h"
+#include <type_traits>
+#include "arithmetically_operable.h"
 
 // Invertable quadratic matrix class with template data type
 namespace genmath {
 
-	template <class T>
+	template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 	class QMatrix : public Matrix<T>, public ObjectBase {
 	
 	public:

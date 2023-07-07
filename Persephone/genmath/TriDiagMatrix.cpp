@@ -1,9 +1,9 @@
 #include "TriDiagMatrix.h"
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 char genmath::TriDiagMatrix<T>::DelimChar = '|';
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::TriDiagMatrix() : QMatrix<T>(), ObjectBase() {
 	
 	QMatrix<T>::size_ = 0;
@@ -11,7 +11,7 @@ genmath::TriDiagMatrix<T>::TriDiagMatrix() : QMatrix<T>(), ObjectBase() {
 	Matrix<T>::data_type_ = 2;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::TriDiagMatrix(size_t dim) : QMatrix<T>(dim), ObjectBase() {
 	
 	if (dim <= 2) throw std::exception("Dimension parameter is out of range (TriDiagMatrix).");
@@ -19,14 +19,14 @@ genmath::TriDiagMatrix<T>::TriDiagMatrix(size_t dim) : QMatrix<T>(dim), ObjectBa
 	Matrix<T>::data_type_ = 2;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::TriDiagMatrix(std::string data) : ObjectBase() {
 
 	operator=(data);
 	Matrix<T>::data_type_ = 2;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::TriDiagMatrix(std::vector<T>& data, bool force_invertable)
 	: QMatrix<T>((data.size() - 1) / 3 + 1), ObjectBase() {
 	
@@ -64,17 +64,17 @@ genmath::TriDiagMatrix<T>::TriDiagMatrix(std::vector<T>& data, bool force_invert
 	Matrix<T>::data_type_ = 2;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::TriDiagMatrix(const TriDiagMatrix<T>& orig) : QMatrix<T>(orig), ObjectBase(orig) {
 
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::~TriDiagMatrix() {
 	
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>& genmath::TriDiagMatrix<T>::operator=(const TriDiagMatrix<T>& orig) {
 	
 	ObjectBase::operator=(orig);
@@ -82,30 +82,30 @@ genmath::TriDiagMatrix<T>& genmath::TriDiagMatrix<T>::operator=(const TriDiagMat
 	return *this;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::TriDiagMatrix<T>::operator=(std::string param) {
 
 	return QMatrix<T>::operator=(param);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::TriDiagMatrix<T>::GetData() const {
 
 	return QMatrix<T>::GetData();
 }
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::TriDiagMatrix<T>::GetColumnVecs() const {
 
 	return QMatrix<T>::GetColumnVecs();
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 std::vector<genmath::Vector<T> > genmath::TriDiagMatrix<T>::GetRowVecs() const {
 	
 	return Matrix<T>::data_;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 const genmath::Vector<T>& genmath::TriDiagMatrix<T>::operator[](size_t ind) const{
 
 	if (ind >= QMatrix<T>::size_)
@@ -114,7 +114,7 @@ const genmath::Vector<T>& genmath::TriDiagMatrix<T>::operator[](size_t ind) cons
 	return Matrix<T>::data_[ind];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 T genmath::TriDiagMatrix<T>::GetDet() const {
 
 	if (QMatrix<T>::size_ == 0) return T("0.0");
@@ -124,7 +124,7 @@ T genmath::TriDiagMatrix<T>::GetDet() const {
 	return det_aux_mtx.GetDet();
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::TriDiagMatrix<T>::operator==(const TriDiagMatrix<T>& operand) const {
 
 	if (QMatrix<T>::size_ != operand.size_)
@@ -150,13 +150,13 @@ bool genmath::TriDiagMatrix<T>::operator==(const TriDiagMatrix<T>& operand) cons
 	return equals;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 bool genmath::TriDiagMatrix<T>::operator!=(const TriDiagMatrix<T>& operand) const {
 
 	return !operator==(operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::TriDiagMatrix<T>::operator+=(const TriDiagMatrix<T>& operand) {
 
 	if (QMatrix<T>::size_ != operand.size_)
@@ -178,7 +178,7 @@ void genmath::TriDiagMatrix<T>::operator+=(const TriDiagMatrix<T>& operand) {
 		operand_data[QMatrix<T>::size_ - 1][QMatrix<T>::size_ - 1];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::TriDiagMatrix<T>::operator-=(const TriDiagMatrix<T>& operand) {
 
 	if (QMatrix<T>::size_ != operand.size_)
@@ -200,7 +200,7 @@ void genmath::TriDiagMatrix<T>::operator-=(const TriDiagMatrix<T>& operand) {
 		operand_data[QMatrix<T>::size_ - 1][QMatrix<T>::size_ - 1];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T> genmath::TriDiagMatrix<T>::operator+(const TriDiagMatrix<T>& operand) const {
 	
 	if (QMatrix<T>::size_ != operand.size_)
@@ -211,7 +211,7 @@ genmath::TriDiagMatrix<T> genmath::TriDiagMatrix<T>::operator+(const TriDiagMatr
 	return ret_mtx;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T> genmath::TriDiagMatrix<T>::operator-(const TriDiagMatrix<T>& operand) const {
 
 	if (QMatrix<T>::size_ != operand.size_)
@@ -222,7 +222,7 @@ genmath::TriDiagMatrix<T> genmath::TriDiagMatrix<T>::operator-(const TriDiagMatr
 	return ret_mtx;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::TriDiagMatrix<T>::operator*(const Vector<T>& operand) const {
 
 	if (QMatrix<T>::size_ != operand.Size())
@@ -245,7 +245,7 @@ genmath::Vector<T> genmath::TriDiagMatrix<T>::operator*(const Vector<T>& operand
 	return ret_vec;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 void genmath::TriDiagMatrix<T>::GenLinCombImplicit(const Vector<T>& operand) {
 
 	if (QMatrix<T>::size_ != operand.Size())
@@ -265,7 +265,7 @@ void genmath::TriDiagMatrix<T>::GenLinCombImplicit(const Vector<T>& operand) {
 	Matrix<T>::data_[QMatrix<T>::size_ - 1][QMatrix<T>::size_ - 1] *= operand[QMatrix<T>::size_ - 1];
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T> genmath::TriDiagMatrix<T>::GenLinComb(const Vector<T>& operand) const {
 
 	TriDiagMatrix<T> ret_mtx(*this);
@@ -273,13 +273,13 @@ genmath::TriDiagMatrix<T> genmath::TriDiagMatrix<T>::GenLinComb(const Vector<T>&
 	return ret_mtx;
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::Vector<T> genmath::TriDiagMatrix<T>::SolveGauss(const Vector<T>& operand) const {
 
 	return QMatrix<T>::SolveGauss(operand);
 }
 
-template <class T>
+template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 genmath::TriDiagMatrix<T>::operator std::string() const {
 
 	return QMatrix<T>::operator std::string();

@@ -5,10 +5,12 @@
 #include <exception>
 #include "ObjectBase.h"
 #include "LongDouble.h"
+#include <type_traits>
+#include "arithmetically_operable.h"
 
 namespace genmath {
 
-	template <class T>
+	template <class T> requires std::totally_ordered<T> && arithmetically_operable<T>
 	class Vector : public ObjectBase {
 
 	public:
