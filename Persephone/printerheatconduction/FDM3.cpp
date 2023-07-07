@@ -316,8 +316,6 @@ template <class T>
 			std::scoped_lock<std::mutex> update_lock(start_execution_mutex_);
 
 			// updating vectors and coefficients for x 1D FDMs
-			model_accessibility_ = 0;// x values are updated
-			std::unique_lock<std::mutex> inter_access_lock(leveled_sequential_mutexes_[model_accessibility_]);
 			this->UpdateXObjects();
 			active_threads_ = no_concurrent_threads_;
 		}
@@ -337,7 +335,6 @@ template <class T>
 
 			// updating vectors and coefficients for y 1D FDMs
 			this->UpdateYObjects();
-			model_accessibility_ = 1;// y values are updated
 			active_threads_ = no_concurrent_threads_;
 		}
 		start_exec_cond_.notify_all();
@@ -355,7 +352,6 @@ template <class T>
 
 			// updating vectors and coefficients for z 1D FDMs
 			this->UpdateZObjects();
-			model_accessibility_ = 2;
 			active_threads_ = no_concurrent_threads_;
 		}
 		start_exec_cond_.notify_all();
@@ -369,8 +365,7 @@ template <class T>
 		while (suspend_sim_) std::this_thread::yield();
 		// updating vectors and coefficients for x 1D FDMs
 		this->UpdateXObjects();
-		model_accessibility_ = 0;
-
+		
 		// computing x axis based 1D FDM objects
 		for (FDM1<T>& x_component : x_components_) {
 
@@ -387,8 +382,7 @@ template <class T>
 		while (suspend_sim_) std::this_thread::yield();
 		// updating vectors and coefficients for y 1D FDMs
 		this->UpdateYObjects();
-		model_accessibility_ = 1;
-
+		
 		// computing y axis based 1D FDM objects
 		for (FDM1<T>& y_component : y_components_) {
 
@@ -405,8 +399,7 @@ template <class T>
 		while (suspend_sim_) std::this_thread::yield();
 		// updating vectors and coefficients for z 1D FDMs
 		this->UpdateZObjects();
-		model_accessibility_ = 2;
-
+		
 		// computing z axis based 1D FDM objects
 		for (FDM1<T>& z_component : z_components_) {
 
@@ -435,7 +428,6 @@ template <class T>
 
 			// updating vectors and coefficients for x 1D FDMs
 			this->UpdateXObjects();
-			model_accessibility_ = 0;
 			active_threads_ = no_concurrent_threads_;
 		}
 		start_exec_cond_.notify_all();
@@ -454,7 +446,6 @@ template <class T>
 
 			// updating vectors and coefficients for y 1D FDMs
 			this->UpdateYObjects();
-			model_accessibility_ = 1;
 			active_threads_ = no_concurrent_threads_;
 		}
 		start_exec_cond_.notify_all();
@@ -472,7 +463,6 @@ template <class T>
 
 			// updating vectors and coefficients for z 1D FDMs
 			this->UpdateZObjects();
-			model_accessibility_ = 2;
 			active_threads_ = no_concurrent_threads_;
 		}
 		start_exec_cond_.notify_all();
@@ -486,8 +476,7 @@ template <class T>
 		while (suspend_sim_) std::this_thread::yield();
 		// updating vectors and coefficients for x 1D FDMs
 		this->UpdateXObjects();
-		model_accessibility_ = 0;
-
+		
 		// computing x axis based 1D FDM objects
 		for (FDM1<T>& x_component : x_components_) {
 
@@ -504,8 +493,7 @@ template <class T>
 		while (suspend_sim_) std::this_thread::yield();
 		// updating vectors and coefficients for y 1D FDMs
 		this->UpdateYObjects();
-		model_accessibility_ = 1;
-
+		
 		// computing y axis based 1D FDM objects
 		for (FDM1<T>& y_component : y_components_) {
 
@@ -522,8 +510,7 @@ template <class T>
 		while (suspend_sim_) std::this_thread::yield();
 		// updating vectors and coefficients for z 1D FDMs
 		this->UpdateZObjects();
-		model_accessibility_ = 2;
-
+		
 		// computing z axis based 1D FDM objects
 		for (FDM1<T>& z_component : z_components_) {
 
