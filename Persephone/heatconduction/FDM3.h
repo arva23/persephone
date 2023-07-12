@@ -19,7 +19,7 @@
 #include "../genmath/TriDiagMatrix.h"
 #include "FDM1.h"
 
-namespace printerheatconduction {
+namespace heatconduction {
 
 	struct NullObj {};
 
@@ -62,7 +62,7 @@ namespace printerheatconduction {
 
 		FDM3(const FDM3<T>& orig);
 
-		FDM3<T>& operator=(const FDM3<T>& orig);
+		virtual FDM3<T>& operator=(const FDM3<T>& orig);
 
 		virtual ~FDM3();
 
@@ -164,5 +164,5 @@ namespace printerheatconduction {
 }
 
 
-template class printerheatconduction::FDM3<genmath::LongDouble>;
-template class genmath::IterativeModel<printerheatconduction::NullObj, genmath::LongDouble>;
+template class heatconduction::FDM3<genmath::LongDouble>;
+template class genmath::IterativeModel<heatconduction::NullObj, genmath::LongDouble>;

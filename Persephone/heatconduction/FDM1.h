@@ -12,7 +12,7 @@
 #include "../genmath/QMatrix.h"
 #include "../genmath/TriDiagMatrix.h"
 
-namespace printerheatconduction {
+namespace heatconduction {
 
 	// one dimensional Finite Difference Method using Crank - Nicolson method
 	template <class T>
@@ -101,5 +101,5 @@ namespace printerheatconduction {
 	};
 }
 
-template class printerheatconduction::FDM1<genmath::LongDouble>;
+template class heatconduction::FDM1<genmath::LongDouble>;
 template class genmath::IterativeModel<genmath::Vector<genmath::LongDouble>, genmath::LongDouble>;
