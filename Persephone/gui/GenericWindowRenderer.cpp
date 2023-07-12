@@ -1,12 +1,12 @@
 #include "GenericWindowRenderer.h"
 #include "GLUtils.hpp"
 
-InputControl GenericWindowRenderer::InputEventControl = InputControl();
+gui::InputControl gui::GenericWindowRenderer::InputEventControl = InputControl();
 
-std::atomic_uint16_t GenericWindowRenderer::ActiveRendererObjectCount = 0;
+std::atomic_uint16_t gui::GenericWindowRenderer::ActiveRendererObjectCount = 0;
 
 
-void GenericWindowRenderer::StaticInit() {
+void gui::GenericWindowRenderer::StaticInit() {
 	/*
 	atexit([] {
 		program_console_.Println("Press a key to exit the application...");
@@ -43,7 +43,7 @@ void GenericWindowRenderer::StaticInit() {
 	InputEventControl.Run();
 }
 
-GenericWindowRenderer::GenericWindowRenderer() {
+gui::GenericWindowRenderer::GenericWindowRenderer() {
 
 	program_console_ = ConsoleUI();
 	window_id_ = 0;
@@ -66,7 +66,7 @@ GenericWindowRenderer::GenericWindowRenderer() {
 	ren_init_ = false;
 }
 
-GenericWindowRenderer::GenericWindowRenderer(ConsoleUI& program_console, float rotation_precision, 
+gui::GenericWindowRenderer::GenericWindowRenderer(ConsoleUI& program_console, float rotation_precision, 
 	float zoom_precision, float translation_precision, std::vector<GenericPanel*> render_objects, 
 	uint16_t window_width, uint16_t window_height) {
 
@@ -117,7 +117,7 @@ GenericWindowRenderer::GenericWindowRenderer(ConsoleUI& program_console, float r
 	size_of_render_objects_ = render_objects_.size();
 }
 
-GenericWindowRenderer::GenericWindowRenderer(const GenericWindowRenderer& orig) {
+gui::GenericWindowRenderer::GenericWindowRenderer(const GenericWindowRenderer& orig) {
 
 	program_console_ = orig.program_console_;
 	ren_init_ = orig.ren_init_;
@@ -149,7 +149,7 @@ GenericWindowRenderer::GenericWindowRenderer(const GenericWindowRenderer& orig) 
 	render_indices_ = orig.render_indices_;
 }
 
-GenericWindowRenderer::~GenericWindowRenderer() {
+gui::GenericWindowRenderer::~GenericWindowRenderer() {
 		
 	if (ren_init_) {
 		
@@ -180,7 +180,7 @@ GenericWindowRenderer::~GenericWindowRenderer() {
 	}
 }
 
-void GenericWindowRenderer::Init() {
+void gui::GenericWindowRenderer::Init() {
 
 	sdl_win_ = SDL_CreateWindow("Printer operation optimizer",
 		(DisplayWidth - window_width_) / 2, (DisplayHeight - window_height_) / 2,
@@ -302,19 +302,19 @@ void GenericWindowRenderer::Init() {
 	// registering internal, own events
 
 	rotate_scene_event_ = ComplexInputEvent<GenericWindowRenderer>(
-		this, &GenericWindowRenderer::RotateSceneView,
+		this, &gui::GenericWindowRenderer::RotateSceneView,
 		3, new SimpleEvent[]{ CEV_MOUSEBUTTONUP, CEV_MOUSEBUTTONDOWN, CEV_MOUSEMOTION },
 		std::numeric_limits<uint32_t>::max(), 10);
 	InputEventControl.RegisterGenericObjectComplexEvent(&rotate_scene_event_);
 
 	zoom_scene_event_ = ComplexInputEvent<GenericWindowRenderer>(
-		this, &GenericWindowRenderer::ZoomSceneView,
+		this, &gui::GenericWindowRenderer::ZoomSceneView,
 		1, new SimpleEvent[]{ CEV_MOUSWHEEL },
 		std::numeric_limits<uint32_t>::max(), 10);
 	InputEventControl.RegisterGenericObjectComplexEvent(&zoom_scene_event_);
 
 	translate_scene_event_ = ComplexInputEvent<GenericWindowRenderer>(
-		this, &GenericWindowRenderer::TranslateSceneEvent,
+		this, &gui::GenericWindowRenderer::TranslateSceneEvent,
 		2, new SimpleEvent[]{ CEV_KEYBOARDKEYUP, CEV_KEYBOARDKEYDOWN },
 		std::numeric_limits<uint32_t>::max(), 10);
 	InputEventControl.RegisterGenericObjectComplexEvent(&translate_scene_event_);
@@ -338,7 +338,7 @@ void GenericWindowRenderer::Init() {
 	ren_init_ = true;
 }
 
-GenericWindowRenderer& GenericWindowRenderer::operator=(const GenericWindowRenderer& orig) {
+gui::GenericWindowRenderer& gui::GenericWindowRenderer::operator=(const GenericWindowRenderer& orig) {
 
 	program_console_ = orig.program_console_;
 	ren_init_ = orig.ren_init_;
@@ -373,7 +373,7 @@ GenericWindowRenderer& GenericWindowRenderer::operator=(const GenericWindowRende
 	return *this;
 }
 
-void GenericWindowRenderer::RotateSceneView(const SDL_Event& sdl_event) {
+void gui::GenericWindowRenderer::RotateSceneView(const SDL_Event& sdl_event) {
 
 	// should use Tait-Bryan intrinsic rotation system
 	std::scoped_lock<std::mutex> transform_lock(view_transform_mutex_);
@@ -393,7 +393,7 @@ void GenericWindowRenderer::RotateSceneView(const SDL_Event& sdl_event) {
 	m_matView_ = glm::lookAt(recent_eye_, recent_center_, glm::vec3(0, 0, 1));
 }
 
-void GenericWindowRenderer::ZoomSceneView(const SDL_Event& sdl_event) {
+void gui::GenericWindowRenderer::ZoomSceneView(const SDL_Event& sdl_event) {
 
 	std::scoped_lock<std::mutex> transform_lock(view_transform_mutex_);
 	if ((-1.0) * sdl_event.wheel.y < 3 
@@ -406,7 +406,7 @@ void GenericWindowRenderer::ZoomSceneView(const SDL_Event& sdl_event) {
 	m_matView_ = glm::lookAt(recent_eye_, recent_center_, glm::vec3(0, 0, 1));
 }
 
-void GenericWindowRenderer::TranslateSceneEvent(const SDL_Event& sdl_event) {
+void gui::GenericWindowRenderer::TranslateSceneEvent(const SDL_Event& sdl_event) {
 
 	if (sdl_event.key.keysym.sym == SDLK_RIGHT) {
 	
@@ -438,12 +438,12 @@ void GenericWindowRenderer::TranslateSceneEvent(const SDL_Event& sdl_event) {
 	}
 }
 
-void GenericWindowRenderer::CloseWindow() {
+void gui::GenericWindowRenderer::CloseWindow() {
 
 	run_rendering_ = false;
 }
 
-void GenericWindowRenderer::UpdateData() {
+void gui::GenericWindowRenderer::UpdateData() {
 	
 
 	render_vertices_.clear();
@@ -479,7 +479,7 @@ void GenericWindowRenderer::UpdateData() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void GenericWindowRenderer::Render() {
+void gui::GenericWindowRenderer::Render() {
 
 	if (!ren_init_)
 		throw std::exception("No video initialization has done (GenericWindowRenderer).");
@@ -512,13 +512,13 @@ void GenericWindowRenderer::Render() {
 	}
 }
 
-void GenericWindowRenderer::SuspendRendering() {
+void gui::GenericWindowRenderer::SuspendRendering() {
 
 	InputEventControl.SuspendInputMonitoring();
 	suspend_rendering_ = true;
 }
 
-void GenericWindowRenderer::ContinueRendering() {
+void gui::GenericWindowRenderer::ContinueRendering() {
 
 	InputEventControl.ContinueInputMonitoring();
 	suspend_rendering_ = false;

@@ -1,6 +1,6 @@
 #include "GenericPanel.h"
 
-GenericPanel::GenericPanel() {
+gui::GenericPanel::GenericPanel() {
 
 	interval_x_start_ = 0;
 	interval_x_end_ = 0;
@@ -9,7 +9,7 @@ GenericPanel::GenericPanel() {
 	recent_index_index_ = 0;
 }
 
-GenericPanel::GenericPanel(uint64_t interval_x_start, uint64_t interval_x_end, uint64_t interval_y_start,
+gui::GenericPanel::GenericPanel(uint64_t interval_x_start, uint64_t interval_x_end, uint64_t interval_y_start,
 	uint64_t interval_y_end) {
 		
 	interval_x_start_ = interval_x_start;
@@ -30,7 +30,7 @@ GenericPanel::GenericPanel(uint64_t interval_x_start, uint64_t interval_x_end, u
 	indices_.push_back(3);
 }
 
-GenericPanel::GenericPanel(const GenericPanel& orig) {
+gui::GenericPanel::GenericPanel(const GenericPanel& orig) {
 
 	event_handlers_ = orig.event_handlers_;
 	interval_x_start_ = orig.interval_x_start_;
@@ -39,7 +39,7 @@ GenericPanel::GenericPanel(const GenericPanel& orig) {
 	interval_y_end_ = orig.interval_y_end_;
 }
 
-GenericPanel& GenericPanel::operator=(const GenericPanel& orig) {
+gui::GenericPanel& gui::GenericPanel::operator=(const GenericPanel& orig) {
 
 	event_handlers_ = orig.event_handlers_;
 	interval_x_start_ = orig.interval_x_start_;
@@ -48,47 +48,47 @@ GenericPanel& GenericPanel::operator=(const GenericPanel& orig) {
 	interval_y_end_ = orig.interval_y_end_;
 }
 
-GenericPanel::~GenericPanel() {
+gui::GenericPanel::~GenericPanel() {
 
 
 }
 
-std::mutex& GenericPanel::GetDataLockMutex() {
+std::mutex& gui::GenericPanel::GetDataLockMutex() {
 
 	return data_lock_mutex_;
 }
 
-std::vector<Vertex>& GenericPanel::FetchVertexData() {
+std::vector<gui::Vertex>& gui::GenericPanel::FetchVertexData() {
 
 	return vertices_;
 }
 
-std::vector<GLuint>& GenericPanel::FetchIndexData() {
+std::vector<GLuint>& gui::GenericPanel::FetchIndexData() {
 
 	return indices_;
 }
 
-size_t GenericPanel::GetVertexContainerSize() {
+size_t gui::GenericPanel::GetVertexContainerSize() {
 
 	return vertices_.size();// planar rectangular object
 }
 
-size_t GenericPanel::GetIndexContainerSize() {
+size_t gui::GenericPanel::GetIndexContainerSize() {
 
 	return indices_.size();
 }
 
-size_t GenericPanel::GetEventHandlersSize() {
+size_t gui::GenericPanel::GetEventHandlersSize() {
 
 	return event_handlers_.size();
 }
 
-GenericComplexInputEvent* GenericPanel::GetEventHandler(size_t ind) {
+gui::GenericComplexInputEvent* gui::GenericPanel::GetEventHandler(size_t ind) {
 
 	return event_handlers_[ind];
 }
 
-void* GenericPanel::GetObjectRef() {
+void* gui::GenericPanel::GetObjectRef() {
 
 	return this;
 }

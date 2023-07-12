@@ -10,48 +10,49 @@
 #include "../include/SDL.h"
 #include "../include/GL/glew.h"
 #include <mutex>
+namespace gui {
 
-struct Vertex {
+	struct Vertex {
 
-	glm::vec3 vertex_;
-	glm::vec4 color_;
-};
+		glm::vec3 vertex_;
+		glm::vec4 color_;
+	};
 
-class GenericPanel {
+	class GenericPanel {
 
-public:
-	GenericPanel();
+	public:
+		GenericPanel();
 
-	GenericPanel(uint64_t interval_x_start, uint64_t interval_x_end, uint64_t interval_y_start,
-		uint64_t interval_y_end);
+		GenericPanel(uint64_t interval_x_start, uint64_t interval_x_end, uint64_t interval_y_start,
+			uint64_t interval_y_end);
 	
-	GenericPanel(const GenericPanel& orig);
+		GenericPanel(const GenericPanel& orig);
 	
-	GenericPanel& operator=(const GenericPanel& orig);
+		GenericPanel& operator=(const GenericPanel& orig);
 
-	virtual ~GenericPanel();
+		virtual ~GenericPanel();
 	
-	std::mutex& GetDataLockMutex();
-	virtual std::vector<Vertex>& FetchVertexData();
-	virtual std::vector<GLuint>& FetchIndexData();
-	size_t GetVertexContainerSize();
-	size_t GetIndexContainerSize();
-	size_t GetEventHandlersSize();
-	GenericComplexInputEvent* GetEventHandler(const size_t ind);
-	virtual void* GetObjectRef();
+		std::mutex& GetDataLockMutex();
+		virtual std::vector<Vertex>& FetchVertexData();
+		virtual std::vector<GLuint>& FetchIndexData();
+		size_t GetVertexContainerSize();
+		size_t GetIndexContainerSize();
+		size_t GetEventHandlersSize();
+		GenericComplexInputEvent* GetEventHandler(const size_t ind);
+		virtual void* GetObjectRef();
 	
-protected:
+	protected:
 	
-	// IoC based handlers (dependency injection), dynamic dispatch, RAII
-	std::vector<GenericComplexInputEvent*> event_handlers_;
-	uint64_t interval_x_start_;
-	uint64_t interval_x_end_;
-	uint64_t interval_y_start_;
-	uint64_t interval_y_end_;
+		// IoC based handlers (dependency injection), dynamic dispatch, RAII
+		std::vector<GenericComplexInputEvent*> event_handlers_;
+		uint64_t interval_x_start_;
+		uint64_t interval_x_end_;
+		uint64_t interval_y_start_;
+		uint64_t interval_y_end_;
 
-	std::mutex data_lock_mutex_;
-	GLuint recent_index_index_;
-	std::vector<GLuint> indices_;
-	std::vector<Vertex> vertices_;// normalized positions and normalized colors
-};
-
+		std::mutex data_lock_mutex_;
+		GLuint recent_index_index_;
+		std::vector<GLuint> indices_;
+		std::vector<Vertex> vertices_;// normalized positions and normalized colors
+	};
+}

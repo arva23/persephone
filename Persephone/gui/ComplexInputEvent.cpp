@@ -1,37 +1,37 @@
 #include "ComplexInputEvent.h"
 
-uint32_t GenericComplexInputEvent::DefaultRegistrationInterval = 100;
+uint32_t gui::GenericComplexInputEvent::DefaultRegistrationInterval = 100;
 
-GenericComplexInputEvent::GenericComplexInputEvent() {
-
-
-}
-
-GenericComplexInputEvent::GenericComplexInputEvent(const GenericComplexInputEvent& orig) {
-
-}
-
-GenericComplexInputEvent::~GenericComplexInputEvent() {
+gui::GenericComplexInputEvent::GenericComplexInputEvent() {
 
 
 }
 
-void GenericComplexInputEvent::operator()(const SDL_Event& sdl_event) {
+gui::GenericComplexInputEvent::GenericComplexInputEvent(const GenericComplexInputEvent& orig) {
+
+}
+
+gui::GenericComplexInputEvent::~GenericComplexInputEvent() {
 
 
 }
 
-bool GenericComplexInputEvent::operator==(const int64_t* recent_event_time_stamp) {
+void gui::GenericComplexInputEvent::operator()(const SDL_Event& sdl_event) {
+
+
+}
+
+bool gui::GenericComplexInputEvent::operator==(const int64_t* recent_event_time_stamp) {
 
 	return false;
 }
 
-GenericComplexInputEvent& GenericComplexInputEvent::operator=(const GenericComplexInputEvent& orig) {
+gui::GenericComplexInputEvent& gui::GenericComplexInputEvent::operator=(const GenericComplexInputEvent& orig) {
 
 	return *this;
 }
 
-uint8_t GenericComplexInputEvent::GetNumberOfEvents() {
+uint8_t gui::GenericComplexInputEvent::GetNumberOfEvents() {
 
 	return 0;
 }
@@ -39,20 +39,20 @@ uint8_t GenericComplexInputEvent::GetNumberOfEvents() {
 
 
 template <class HANDLER>
-ComplexInputEvent<HANDLER>::ComplexInputEvent() : GenericComplexInputEvent() {
+gui::ComplexInputEvent<HANDLER>::ComplexInputEvent() : GenericComplexInputEvent() {
 
 	object_pointer_ = nullptr;
 	handler_member_function_ = nullptr;
 	number_of_events_ = 0;
 	event_type_and_order_ = new SimpleEvent[1]{ CEV_EMPTY };
 	// default registration event
-	registration_interval_ = GenericComplexInputEvent::DefaultRegistrationInterval;
+	registration_interval_ = gui::GenericComplexInputEvent::DefaultRegistrationInterval;
 	last_call_ = 0;
 	call_cooldown_ = 0;
 }
 
 template <class HANDLER>
-ComplexInputEvent<HANDLER>::ComplexInputEvent(HANDLER* object_pointer,
+gui::ComplexInputEvent<HANDLER>::ComplexInputEvent(HANDLER* object_pointer,
 	void(HANDLER::*handler_member_function)(const SDL_Event&), uint8_t number_of_events,
 	SimpleEvent* event_type_and_order, uint32_t registration_interval, uint32_t call_cooldown) : GenericComplexInputEvent() {
 
@@ -78,7 +78,7 @@ ComplexInputEvent<HANDLER>::ComplexInputEvent(HANDLER* object_pointer,
 }
 
 template <class HANDLER>
-ComplexInputEvent<HANDLER>::ComplexInputEvent(const ComplexInputEvent<HANDLER>& orig) : GenericComplexInputEvent(orig) {
+gui::ComplexInputEvent<HANDLER>::ComplexInputEvent(const ComplexInputEvent<HANDLER>& orig) : GenericComplexInputEvent(orig) {
 
 	object_pointer_ = orig.object_pointer_;
 	handler_member_function_ = orig.handler_member_function_;
@@ -90,9 +90,9 @@ ComplexInputEvent<HANDLER>::ComplexInputEvent(const ComplexInputEvent<HANDLER>& 
 }
 
 template <class HANDLER>
-ComplexInputEvent<HANDLER>& ComplexInputEvent<HANDLER>::operator=(const ComplexInputEvent<HANDLER>& orig) {
+gui::ComplexInputEvent<HANDLER>& gui::ComplexInputEvent<HANDLER>::operator=(const ComplexInputEvent<HANDLER>& orig) {
 
-	GenericComplexInputEvent::operator=(*this);
+	gui::GenericComplexInputEvent::operator=(*this);
 
 	object_pointer_ = orig.object_pointer_;
 	handler_member_function_ = orig.handler_member_function_;
@@ -106,13 +106,13 @@ ComplexInputEvent<HANDLER>& ComplexInputEvent<HANDLER>::operator=(const ComplexI
 }
 
 template <class HANDLER>
-ComplexInputEvent<HANDLER>::~ComplexInputEvent() {
+gui::ComplexInputEvent<HANDLER>::~ComplexInputEvent() {
 
 	//delete object_pointer_;// RAII declared in upper system level
 }
 
 template <class HANDLER>
-void ComplexInputEvent<HANDLER>::operator()(const SDL_Event& sdl_event) {
+void gui::ComplexInputEvent<HANDLER>::operator()(const SDL_Event& sdl_event) {
 	
 	(object_pointer_->*handler_member_function_)(sdl_event);
 }
@@ -127,7 +127,7 @@ void ComplexInputEvent<HANDLER>::operator()(const SDL_Event& sdl_event) {
 //  6 - window event close
 //  7 - window event resized
 template <class HANDLER>
-bool ComplexInputEvent<HANDLER>::operator==(const int64_t* rec_ev_tstamps) {
+bool gui::ComplexInputEvent<HANDLER>::operator==(const int64_t* rec_ev_tstamps) {
 
 	// examining the order of input events (chronological consistency)
 	int64_t curr_call_tstamp = 0;
@@ -153,7 +153,7 @@ bool ComplexInputEvent<HANDLER>::operator==(const int64_t* rec_ev_tstamps) {
 }
 
 template <class HANDLER>
-uint8_t ComplexInputEvent<HANDLER>::GetNumberOfEvents() {
+uint8_t gui::ComplexInputEvent<HANDLER>::GetNumberOfEvents() {
 
 	return number_of_events_;
 }

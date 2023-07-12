@@ -1,7 +1,7 @@
 #include "HeatMapModelVisualizer.h"
 //#define TEST_DYNAMIC_TIMING
 
-HeatMapModelVisualizer::HeatMapModelVisualizer() : GenericPanel() {
+gui::HeatMapModelVisualizer::HeatMapModelVisualizer() : GenericPanel() {
 
 	position_half_step_ = 0.01;
 	thermal_lower_bound_ = 20.0;
@@ -21,7 +21,7 @@ HeatMapModelVisualizer::HeatMapModelVisualizer() : GenericPanel() {
 	model_play_stopped_ = true;
 }
 
-HeatMapModelVisualizer::HeatMapModelVisualizer(uint64_t area_width, uint64_t area_height, float position_half_step,
+gui::HeatMapModelVisualizer::HeatMapModelVisualizer(uint64_t area_width, uint64_t area_height, float position_half_step,
 	float thermal_lower_bound, float thermal_upper_bound, float env_coeff,
 	float preservation_temp) : GenericPanel(0, 0, area_width, area_height) {
 
@@ -77,7 +77,7 @@ HeatMapModelVisualizer::HeatMapModelVisualizer(uint64_t area_width, uint64_t are
 	
 	// play or pause loaded model play event
 	start_of_pause_loaded_model_play_event_ = ComplexInputEvent<HeatMapModelVisualizer>(
-		this, &HeatMapModelVisualizer::StartOrPauseLoadedModelPlay,
+		this, &gui::HeatMapModelVisualizer::StartOrPauseLoadedModelPlay,
 		2, new SimpleEvent[]{ CEV_KEYBOARDKEYUP, CEV_KEYBOARDKEYDOWN },
 		std::numeric_limits<uint32_t>::max(), 10);
 	GenericPanel::event_handlers_.push_back(&start_of_pause_loaded_model_play_event_);
@@ -85,7 +85,7 @@ HeatMapModelVisualizer::HeatMapModelVisualizer(uint64_t area_width, uint64_t are
 	// increase playback speed (this cause the whole model to be reloaded
 	//  due to optimizations, see LoadComputedModel member function)
 	change_playback_speed_event_ = ComplexInputEvent<HeatMapModelVisualizer>(
-		this, &HeatMapModelVisualizer::ChangePlaybackSpeed,
+		this, &gui::HeatMapModelVisualizer::ChangePlaybackSpeed,
 		2, new SimpleEvent[]{ CEV_KEYBOARDKEYUP, CEV_KEYBOARDKEYDOWN },
 		std::numeric_limits<uint32_t>::max(), 10);
 	GenericPanel::event_handlers_.push_back(&change_playback_speed_event_);
@@ -96,7 +96,7 @@ HeatMapModelVisualizer::HeatMapModelVisualizer(uint64_t area_width, uint64_t are
 	model_play_stopped_ = true;
 }
 
-HeatMapModelVisualizer::HeatMapModelVisualizer(const HeatMapModelVisualizer& orig) : GenericPanel(orig) {
+gui::HeatMapModelVisualizer::HeatMapModelVisualizer(const HeatMapModelVisualizer& orig) : GenericPanel(orig) {
 
 	position_half_step_ = orig.position_half_step_;
 	thermal_lower_bound_ = orig.thermal_lower_bound_;
@@ -118,12 +118,12 @@ HeatMapModelVisualizer::HeatMapModelVisualizer(const HeatMapModelVisualizer& ori
 	model_play_stopped_ = true;
 }
 
-HeatMapModelVisualizer::~HeatMapModelVisualizer() {
+gui::HeatMapModelVisualizer::~HeatMapModelVisualizer() {
 
-
+	
 }
 
-HeatMapModelVisualizer& HeatMapModelVisualizer::operator=(const HeatMapModelVisualizer& orig) {
+gui::HeatMapModelVisualizer& gui::HeatMapModelVisualizer::operator=(const HeatMapModelVisualizer& orig) {
 
 	GenericPanel::operator=(orig);
 
@@ -149,12 +149,12 @@ HeatMapModelVisualizer& HeatMapModelVisualizer::operator=(const HeatMapModelVisu
 	return *this;
 }
 
-void* HeatMapModelVisualizer::GetObjectRef() {
+void* gui::HeatMapModelVisualizer::GetObjectRef() {
 
 	return this;
 }
 
-void HeatMapModelVisualizer::LoadComputedModel(size_t sim_x_ind_rng, size_t sim_y_ind_rng,	size_t sim_z_ind_rng,
+void gui::HeatMapModelVisualizer::LoadComputedModel(size_t sim_x_ind_rng, size_t sim_y_ind_rng,	size_t sim_z_ind_rng,
 	float sim_time_step, std::vector<std::vector<genmath::Vector<genmath::LongDouble> > >& sim_time_frames,
 	std::vector<std::vector<genmath::Vector<genmath::LongDouble> > >& sim_time_frame_coeffs) {
 
@@ -340,7 +340,7 @@ void HeatMapModelVisualizer::LoadComputedModel(size_t sim_x_ind_rng, size_t sim_
 	model_loaded_ = true;
 }
 
-void HeatMapModelVisualizer::ModelPlayerThread() {
+void gui::HeatMapModelVisualizer::ModelPlayerThread() {
 
 	// waiting for previous model playback to finish
 	while (!model_play_stopped_) { std::this_thread::yield(); }
@@ -396,13 +396,13 @@ void HeatMapModelVisualizer::ModelPlayerThread() {
 	return;
 }
 
-void HeatMapModelVisualizer::StartOrPauseLoadedModelPlay(const SDL_Event& sdl_event) {
+void gui::HeatMapModelVisualizer::StartOrPauseLoadedModelPlay(const SDL_Event& sdl_event) {
 
 	if (model_loaded_ && !current_status_frame_ind_ && sdl_event.key.keysym.sym == SDLK_SPACE) {
 	
 		pause_model_play_ = false;
 		stop_model_play_ = false;
-		std::thread model_player_thread(&HeatMapModelVisualizer::ModelPlayerThread, this);
+		std::thread model_player_thread(&gui::HeatMapModelVisualizer::ModelPlayerThread, this);
 		model_player_thread.detach();
 	}
 	else if (model_loaded_ && sdl_event.key.keysym.sym == SDLK_SPACE && !pause_model_play_) {
@@ -416,7 +416,7 @@ void HeatMapModelVisualizer::StartOrPauseLoadedModelPlay(const SDL_Event& sdl_ev
 }
 
 // call without SDL event, at object destruction
-void HeatMapModelVisualizer::StopModelPlay() {
+void gui::HeatMapModelVisualizer::StopModelPlay() {
 
 	pause_model_play_ = false;
 	stop_model_play_ = true;
@@ -425,7 +425,7 @@ void HeatMapModelVisualizer::StopModelPlay() {
 }
 
 // an improvement would a queue-based speed factor scheduler
-void HeatMapModelVisualizer::ChangePlaybackSpeed(const SDL_Event& sdl_event) {
+void gui::HeatMapModelVisualizer::ChangePlaybackSpeed(const SDL_Event& sdl_event) {
 		
 	// Setting frame rate to avoid overwhelmingly and unnecessarily continual data play (high fps rate)
 	//  which should cause slower playback. This must be done due to the high status/fps rate of

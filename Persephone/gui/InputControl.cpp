@@ -1,13 +1,13 @@
 #include "InputControl.h"
 
-InputControl::InputControl() {
+gui::InputControl::InputControl() {
 
 	suspend_input_monitoring_ = false;
 	size_of_registered_complex_events_ = 0;
 	control_thread_started_ = false;
 }
 
-InputControl::InputControl(std::vector<GenericComplexInputEvent*>& object_complex_event_subscriptions) {
+gui::InputControl::InputControl(std::vector<GenericComplexInputEvent*>& object_complex_event_subscriptions) {
 
 	suspend_input_monitoring_ = false;
 	size_of_registered_complex_events_ = object_complex_event_subscriptions.size();
@@ -15,27 +15,27 @@ InputControl::InputControl(std::vector<GenericComplexInputEvent*>& object_comple
 	control_thread_started_ = false;
 }
 
-InputControl::InputControl(const InputControl& orig) {
+gui::InputControl::InputControl(const InputControl& orig) {
 
 	size_of_registered_complex_events_ = orig.size_of_registered_complex_events_;
 	object_complex_event_subscriptions_ = orig.object_complex_event_subscriptions_;
 	control_thread_started_ = orig.control_thread_started_;
 }
 
-InputControl::~InputControl() {
+gui::InputControl::~InputControl() {
 	
 	if (control_thread_started_ && !GenericWindowRenderer::ActiveRendererObjectCount)
 		control_thread_.join();
 }
 
-void InputControl::Run() {
+void gui::InputControl::Run() {
 
 	// launching global input control subsystem
-	control_thread_ = std::thread(&InputControl::MonitorInputEvent, this);
+	control_thread_ = std::thread(&gui::InputControl::MonitorInputEvent, this);
 	control_thread_started_ = true;
 }
 
-InputControl& InputControl::operator=(const InputControl& orig) {
+gui::InputControl& gui::InputControl::operator=(const InputControl& orig) {
 
 	size_of_registered_complex_events_ = orig.size_of_registered_complex_events_;
 	object_complex_event_subscriptions_ = orig.object_complex_event_subscriptions_;
@@ -45,7 +45,7 @@ InputControl& InputControl::operator=(const InputControl& orig) {
 }
 
 // registration occurs via GenericWindowRenderer object
-void InputControl::RegisterGenericObjectComplexEvent(GenericComplexInputEvent* complex_event) {
+void gui::InputControl::RegisterGenericObjectComplexEvent(GenericComplexInputEvent* complex_event) {
 
 	std::scoped_lock<std::mutex> insert_lock(complex_event_mutex_);
 
@@ -53,7 +53,7 @@ void InputControl::RegisterGenericObjectComplexEvent(GenericComplexInputEvent* c
 	++size_of_registered_complex_events_;
 }
 
-void InputControl::UnregisterGenericObjectComplexEvent(GenericComplexInputEvent* complex_event) {
+void gui::InputControl::UnregisterGenericObjectComplexEvent(GenericComplexInputEvent* complex_event) {
 
 
 	std::scoped_lock<std::mutex> erase_lock(complex_event_mutex_);
@@ -68,7 +68,7 @@ void InputControl::UnregisterGenericObjectComplexEvent(GenericComplexInputEvent*
 	}
 }
 
-void InputControl::MonitorInputEvent() {
+void gui::InputControl::MonitorInputEvent() {
 
 	// waiting for GenericWindowRenderer object instances
 	while (!GenericWindowRenderer::ActiveRendererObjectCount) {
@@ -163,12 +163,12 @@ void InputControl::MonitorInputEvent() {
 	}
 }
 
-void InputControl::SuspendInputMonitoring() {
+void gui::InputControl::SuspendInputMonitoring() {
 
 	suspend_input_monitoring_ = true;
 }
 
-void InputControl::ContinueInputMonitoring() {
+void gui::InputControl::ContinueInputMonitoring() {
 
 	suspend_input_monitoring_ = false;
 }
