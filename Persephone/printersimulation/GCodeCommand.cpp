@@ -1,7 +1,7 @@
 #include "GCodeCommand.h"
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::CmdModels::CmdModels() {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::CmdModels::CmdModels() {
 
 	models_ = std::vector<Cmd>();
 	// intializing allowed GCode commands
@@ -30,26 +30,26 @@ GCodeCommand<T>::CmdModels::CmdModels() {
 	size_of_models_ = models_.size();
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::CmdModels::CmdModels(const CmdModels& orig) {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::CmdModels::CmdModels(const CmdModels& orig) {
 
 	models_ = orig.models_, size_of_models_ = orig.size_of_models_; 
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::CmdModels::~CmdModels() {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::CmdModels::~CmdModels() {
 
 
 }
 
-template <class T> requires StringAssignable<T>
-typename GCodeCommand<T>::CmdModels GCodeCommand<T>::CommandModels = GCodeCommand<T>::CmdModels();
+template <class T> requires printersimulation::StringAssignable<T>
+typename printersimulation::GCodeCommand<T>::CmdModels printersimulation::GCodeCommand<T>::CommandModels = printersimulation::GCodeCommand<T>::CmdModels();
 
-template <class T> requires StringAssignable<T>
-char GCodeCommand<T>::DelimChar = ' ';
+template <class T> requires printersimulation::StringAssignable<T>
+char printersimulation::GCodeCommand<T>::DelimChar = ' ';
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::GCodeCommand() : ObjectBase() {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::GCodeCommand() : ObjectBase() {
 
 	name_ = "";
 	params_ = std::map<std::string, T>();
@@ -57,8 +57,8 @@ GCodeCommand<T>::GCodeCommand() : ObjectBase() {
 	valueless_params_ = false;
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::GCodeCommand(std::string name, std::map<std::string, T> params) : ObjectBase() {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::GCodeCommand(std::string name, std::map<std::string, T> params) : ObjectBase() {
 
 	bool found = false;
 	size_t size_of_cmds = CommandModels.models_.size();
@@ -106,15 +106,15 @@ GCodeCommand<T>::GCodeCommand(std::string name, std::map<std::string, T> params)
 		throw std::exception("Insufficient number of parameters (GCodeCommand).");
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::GCodeCommand(std::string raw_data) {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::GCodeCommand(std::string raw_data) {
 
 	if (this->operator=(raw_data)) [[unlikely]]
 		throw std::exception("There was an error during conversion raw data to object (GCodeCommand).");
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::GCodeCommand(const GCodeCommand<T>& orig) : ObjectBase(orig) {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::GCodeCommand(const GCodeCommand<T>& orig) : ObjectBase(orig) {
 
 	name_ = orig.name_;
 	params_ = orig.params_;
@@ -122,13 +122,13 @@ GCodeCommand<T>::GCodeCommand(const GCodeCommand<T>& orig) : ObjectBase(orig) {
 	valueless_params_ = orig.valueless_params_;
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::~GCodeCommand() {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::~GCodeCommand() {
 
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>& GCodeCommand<T>::operator=(const GCodeCommand<T>& orig) {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>& printersimulation::GCodeCommand<T>::operator=(const GCodeCommand<T>& orig) {
 
 	ObjectBase::operator=(orig);
 
@@ -140,14 +140,14 @@ GCodeCommand<T>& GCodeCommand<T>::operator=(const GCodeCommand<T>& orig) {
 	return *this;
 }
 
-template <class T> requires StringAssignable<T>
-bool GCodeCommand<T>::operator=(std::string raw_data){
+template <class T> requires printersimulation::StringAssignable<T>
+bool printersimulation::GCodeCommand<T>::operator=(std::string raw_data){
 
 	std::stringstream ss_data(raw_data);
 	std::string name = "";
 	name_ = "";
 	params_.clear();
-	std::getline(ss_data, name, GCodeCommand<T>::DelimChar);
+	std::getline(ss_data, name, printersimulation::GCodeCommand<T>::DelimChar);
 
 
 	if (name.substr(0, 1) == ";") {
@@ -195,7 +195,7 @@ bool GCodeCommand<T>::operator=(std::string raw_data){
 
 		while (!ss_data.eof()) {
 			
-			std::getline(ss_data, name, GCodeCommand<T>::DelimChar);
+			std::getline(ss_data, name, printersimulation::GCodeCommand<T>::DelimChar);
 
 			found = false;
 			size_t cmds_i_params_size = model_ref_->params_.size();
@@ -241,8 +241,8 @@ bool GCodeCommand<T>::operator=(std::string raw_data){
 	return false;
 }
 
-template <class T> requires StringAssignable<T>
-GCodeCommand<T>::operator std::string() const {
+template <class T> requires printersimulation::StringAssignable<T>
+printersimulation::GCodeCommand<T>::operator std::string() const {
 
 	std::string ret = "";
 	ret += name_;
@@ -262,14 +262,14 @@ GCodeCommand<T>::operator std::string() const {
 	return ret;
 }
 
-template <class T> requires StringAssignable<T>
-std::string& GCodeCommand<T>::GetName() {
+template <class T> requires printersimulation::StringAssignable<T>
+std::string& printersimulation::GCodeCommand<T>::GetName() {
 
 	return name_;
 }
 
-template <class T> requires StringAssignable<T>
-bool GCodeCommand<T>::IsSet(std::string key) {
+template <class T> requires printersimulation::StringAssignable<T>
+bool printersimulation::GCodeCommand<T>::IsSet(std::string key) {
 
 	if (!model_ref_->params_.size()) return false;
 
@@ -278,8 +278,8 @@ bool GCodeCommand<T>::IsSet(std::string key) {
 	return false;
 }
 
-template <class T> requires StringAssignable<T>
-T& GCodeCommand<T>::Get(std::string key) {
+template <class T> requires printersimulation::StringAssignable<T>
+T& printersimulation::GCodeCommand<T>::Get(std::string key) {
 
 	if (valueless_params_) [[unlikely]]
 		throw std::exception("Command contains no parameters. It is valueless (GCodeCommand).");
@@ -290,8 +290,8 @@ T& GCodeCommand<T>::Get(std::string key) {
 	return params_[key];
 }
 
-template <class T> requires StringAssignable<T>
-void GCodeCommand<T>::Set(std::string key, T value) {
+template <class T> requires printersimulation::StringAssignable<T>
+void printersimulation::GCodeCommand<T>::Set(std::string key, T value) {
 
 	if (valueless_params_) [[unlikely]]
 		throw std::exception("Command contains valueless parameters (GCodeCommand).");
