@@ -66,6 +66,7 @@ distrsys::RMIServer<S>::RMIServer() {
 	port_ = 8888;
 	server_ = sockaddr_in();
 	server_socket_ = SOCKET();
+	timeout_ = 200;
 }
 
 template <class S>
@@ -132,7 +133,7 @@ distrsys::RMIServer<S>::RMIServer(std::string object_id, S* object, uint64_t por
 
 	stop_client_request_listening_ = false;
 
-	SetTimeout(timeout);
+	SetTimeout(server_socket_, timeout);
 	timeout_ = timeout;
 }
 
