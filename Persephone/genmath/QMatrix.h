@@ -1,4 +1,5 @@
-#pragma once
+#ifndef QMATRIX_H_INCLUDED
+#define QMATRIX_H_INCLUDED
 #include <vector>
 #include <string>
 #include <sstream>
@@ -74,4 +75,4 @@ namespace genmath {
 	};
 }
 
-template class genmath::QMatrix<genmath::LongDouble>;
+template class genmath::QMatrix<genmath::LongDouble>;#endif// QMATRIX_H_INCLUDED

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INPUTCONTROL_H_INCLUDED
+#define INPUTCONTROL_H_INCLUDED
+
 #include <stdint.h>
 #include <vector>
 #include "../include/SDL.h"
@@ -46,3 +48,5 @@ namespace gui {
 		bool control_thread_started_;
 	};
 }
+
+#endif// INPUTCONTROL_H_INCLUDED

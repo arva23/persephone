@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATRIX_H_INCLUDED
+#define MATRIX_H_INCLUDED
 #include <vector>
 #include <utility>
 #include <exception>
@@ -65,3 +66,5 @@ namespace genmath {
 }
 
 template class genmath::Matrix<genmath::LongDouble>;
+
+#endif// MATRIX_H_INCLUDED

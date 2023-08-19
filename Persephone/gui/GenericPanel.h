@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GENERICPANEL_H_INCLUDED
+#define GENERICPANEL_H_INCLUDED
+
 #include <vector>
 #include <utility>
 #include <stdint.h>
@@ -56,3 +58,5 @@ namespace gui {
 		std::vector<Vertex> vertices_;// normalized positions and normalized colors
 	};
 }
+
+#endif// GENERICPANEL_H_INCLUDED

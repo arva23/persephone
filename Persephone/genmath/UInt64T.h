@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UINT64T_H_INCLUDED
+#define UINT64T_H_INCLUDED
 #include "ObjectBase.h"
 #include <string>
 #include <math.h>
@@ -52,6 +53,5 @@ namespace genmath {
 	private:
 		unsigned long long data_;
 	};
-
 }
-
+#endif// UINT64T_H_INCLUDED

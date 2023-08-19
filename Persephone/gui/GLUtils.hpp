@@ -1,3 +1,6 @@
+#ifndef GUTILS_HPP_INCLUDED
+#define GUTILS_HPP_INCLUDED
+
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -52,3 +55,5 @@ namespace gui {
 		return loadedShader;
 	}
 }
+
+#endif// GUTILS_HPP_INCLUDED

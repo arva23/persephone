@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DISTRIBUTABLEMODEL_H_INCLUDED
+#define DISTRIBUTABLEMODEL_H_INCLUDED
 #include <type_traits>
 #include <exception>
 #include <iostream>
@@ -175,3 +176,4 @@ namespace distrsys {
 		FT wrapper_;
 	};
 }
+#endif// DISTRIBUTABLEMODEL_H_INCLUDED

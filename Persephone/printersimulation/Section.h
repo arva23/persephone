@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SECTION_H_INCLUDED
+#define SECTION_H_INCLUDED
 #include <utility>
 #include "GCodeCommand.h"
 #include "../genmath/LongDouble.h"
@@ -62,3 +63,5 @@ namespace printersimulation {
 		Section* prev_sect_;
 	};
 }
+
+#endif// SECTION_H_INCLUDED

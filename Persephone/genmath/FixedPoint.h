@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FIXEDPOINT_H_INCLUDED
+#define FIXEDPOINT_H_INCLUDED
 #include "../include/libfixmath/fixmath.h"
 #include <stdint.h>
 #include <string>
@@ -60,3 +61,4 @@ namespace genmath {
 		fix16_t data_;
 	};
 }
+#endif// FIXEDPOINT_H_INCLUDED

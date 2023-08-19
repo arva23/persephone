@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FILECONTROL_H_INCLUDED
+#define FILECONTROL_H_INCLUDED
 #include <algorithm>
 #include <iostream>
 #include <istream>
@@ -260,3 +261,5 @@ private:
 	bool erase_used_;
 	size_t recent_line_index_;
 };
+
+#endif// FILECONTROL_H_INCLUDED

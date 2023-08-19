@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ITERATIVEMODEL_H_INCLUDED
+#define ITERATIVEMODEL_H_INCLUDED
 
 namespace genmath {
 
@@ -39,3 +40,4 @@ namespace genmath {
 	};
 }
 
+#endif// ITERATIVEMODEL_H_INCLUDED

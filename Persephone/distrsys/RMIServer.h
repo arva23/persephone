@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RMISERVER_H_INCLUDED
+#define RMISERVER_H_INCLUDED
 #include <string>
 #include <vector>
 #include <map>
@@ -131,3 +132,5 @@ namespace distrsys {
 		static std::map<std::string, std::set<uint64_t> >rmi_data_;// <object pointer, port>
 	};
 }
+
+#endif// RMISERVER_H_INCLUDED

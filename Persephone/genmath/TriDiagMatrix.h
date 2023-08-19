@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRIDIAGMATRIX_H_INCLUDED
+#define TRIDIAGMATRIX_H_INCLUDED
 #include <vector>
 #include <algorithm>
 #include <sstream>
@@ -63,4 +64,4 @@ namespace genmath {
 }
 
 
-template class genmath::TriDiagMatrix<genmath::LongDouble>;
+template class genmath::TriDiagMatrix<genmath::LongDouble>;#endif// TRIDIAGMATRIX_H_INCLUDED

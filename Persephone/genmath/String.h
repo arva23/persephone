@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STRING_H_INCLUDED
+#define STRING_H_INCLUDED
 #include <string>
 #include <exception>
 #include "ObjectBase.h"
@@ -32,4 +33,4 @@ namespace genmath {
 		std::string data_;
 	};
 }
-
+#endif// STRING_H_INCLUDED

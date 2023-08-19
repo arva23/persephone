@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FDM3_H_INCLUDED
+#define FDM3_H_INCLUDED
 
 #include <vector>
 #include <stdint.h>
@@ -166,3 +167,5 @@ namespace heatconduction {
 
 template class heatconduction::FDM3<genmath::LongDouble>;
 template class genmath::IterativeModel<heatconduction::NullObj, genmath::LongDouble>;
+
+#endif// FDM3_H_INCLUDED

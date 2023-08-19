@@ -1,4 +1,6 @@
-#pragma once
+#ifndef COMPLEXINPUTEVENT_H_INCLUDED
+#define COMPLEXINPUTEVENT_H_INCLUDED
+
 #include "../include/SDL.h"
 #include <stdint.h>
 #include <exception>
@@ -104,3 +106,5 @@ namespace gui {
 	template struct ComplexInputEvent<ModelVisualizer>;
 	template struct ComplexInputEvent<EventHandlerTestClass>;
 }
+
+#endif// COMPLEXINPUTEVENT_H_INCLUDED

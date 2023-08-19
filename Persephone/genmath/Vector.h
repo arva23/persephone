@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR_H_INCLUDED
+#define VECTOR_H_INCLUDED
 #include <vector>
 #include <string>
 #include <sstream>
@@ -57,4 +58,4 @@ namespace genmath {
 }
 
 template class genmath::Vector<genmath::LongDouble>;
-
+#endif// VECTOR_H_INCLUDED

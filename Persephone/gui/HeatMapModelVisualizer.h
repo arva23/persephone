@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HEATMAPMODELVISUALIZER_H_INCLUDED
+#define HEATMAPMODELVISUALIZER_H_INCLUDED
+
 #include "GenericPanel.h"
 #include "../genmath/LongDouble.h"
 #include <vector>
@@ -87,3 +89,5 @@ namespace gui {
 		std::thread model_player_thread_;
 	};
 }
+
+#endif// HEATMAPMODELVISUALIZER_H_INCLUDED

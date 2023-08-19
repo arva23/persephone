@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GCODECOMMAND_H_INCLUDED
+#define GCODECOMMAND_H_INCLUDED
 #include <string>
 #include <vector>
 #include <set>
@@ -104,4 +105,5 @@ namespace printersimulation {
 	};
 }
 
-template class printersimulation::GCodeCommand<genmath::LongDouble>;
+template class printersimulation::GCodeCommand<genmath::LongDouble>;template class printersimulation::GCodeCommand<genmath::LongDouble>;
+#endif// GCODECOMMAND_H_INCLUDED

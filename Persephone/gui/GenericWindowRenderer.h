@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GENERICWINDOWRENDERER_H_INCLUDED
+#define GENERICWINDOWRENDERER_H_INCLUDED
+
 #include <stdint.h>
 #include <vector>
 #include <thread>
@@ -118,3 +120,5 @@ namespace gui {
 		// handling multiple windows (for further improvement)
 	};
 }
+
+#endif// GENERICWINDOWRENDERER_H_INCLUDED

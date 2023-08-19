@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OBJECTBASE_H_INCLUDED
+#define OBJECTBASE_H_INCLUDED
 #include <string>
 #include <stdint.h>
 #include <vector>
@@ -18,3 +19,5 @@ namespace genmath {
 		virtual operator std::string() const;
 	};
 }
+
+#endif// OBJECTBASE_H_INCLUDED

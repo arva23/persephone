@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LONGDOUBLE_H_INCLUDED
+#define LONGDOUBLE_H_INCLUDED
 #include <stdint.h>
 #include <string>
 #include <iostream>
@@ -72,3 +73,5 @@ namespace genmath {
 		long double data_;
 	};
 }
+
+#endif// LONGDOUBLE_H_INCLUDED

@@ -1,3 +1,5 @@
+#ifndef RMIGEN_H_INCLUDED
+#define RMIGEN_H_INCLUDED
 #include<io.h>
 #include<stdio.h>
 #include<winsock2.h>
@@ -37,3 +39,4 @@ namespace distrsys {
 		static WSADATA wsa_;
 	};
 }
+#endif// RMIGEN_H_INCLUDED

@@ -1,7 +1,8 @@
 // https://www.binarytides.com/winsock-socket-programming-tutorial/
 // https://stackoverflow.com/questions/6755637/recv-windows-socket-takes-infinite-time-how-to-timeout
 
-#pragma once
+#ifndef RMICLIENT_H_INCLUDED
+#define RMICLIENT_H_INCLUDED
 #include <string>
 #include <vector>
 #include <map>
@@ -121,3 +122,4 @@ namespace distrsys {
 		std::map<std::string, MethodBase*> method_list_;
 	};
 }
+#endif// RMICLIENT_H_INCLUDED

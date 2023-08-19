@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MAINCONTROLLER_H_INCLUDED
+#define MAINCONTROLLER_H_INCLUDED
 #define TEST_MODULES
 #include <stdint.h>
 #include <math.h>
@@ -111,3 +112,4 @@ private:
 	PrinterSequenceOptimizer printer_sequence_optimizer_;
 	std::list<genmath::String> command_sequence_optimization_task_list_;
 };
+#endif// MAINCONTROLLER_H_INCLUDED
