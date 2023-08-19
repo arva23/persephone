@@ -1,21 +1,21 @@
 #include "Section.h"
 
-genmath::LongDouble printingsimulation::Section::XJerk = "0.0";
-genmath::LongDouble printingsimulation::Section::YJerk = "0.0";
-genmath::LongDouble printingsimulation::Section::XAcc = "0.0";
-genmath::LongDouble printingsimulation::Section::YAcc = "0.0";
-genmath::LongDouble printingsimulation::Section::MinResSpd = "0.0";
-genmath::LongDouble printingsimulation::Section::MaxResSpd = "0.0";
-genmath::LongDouble printingsimulation::Section::MaxResAcc = "0.0";
-genmath::LongDouble printingsimulation::Section::MaxResJerk = "0.0";
-genmath::LongDouble printingsimulation::Section::MaxResSpdTime = "0.0";
-genmath::LongDouble printingsimulation::Section::MaxResSpdLen  = "0.0";
-genmath::LongDouble printingsimulation::Section::Zero = "0.0";
-genmath::LongDouble printingsimulation::Section::One = "1.0";
-genmath::LongDouble printingsimulation::Section::Two = "2.0";
-genmath::LongDouble printingsimulation::Section::Sixty = "60.0";// for feed rate conversion
+genmath::LongDouble printersimulation::Section::XJerk = "0.0";
+genmath::LongDouble printersimulation::Section::YJerk = "0.0";
+genmath::LongDouble printersimulation::Section::XAcc = "0.0";
+genmath::LongDouble printersimulation::Section::YAcc = "0.0";
+genmath::LongDouble printersimulation::Section::MinResSpd = "0.0";
+genmath::LongDouble printersimulation::Section::MaxResSpd = "0.0";
+genmath::LongDouble printersimulation::Section::MaxResAcc = "0.0";
+genmath::LongDouble printersimulation::Section::MaxResJerk = "0.0";
+genmath::LongDouble printersimulation::Section::MaxResSpdTime = "0.0";
+genmath::LongDouble printersimulation::Section::MaxResSpdLen  = "0.0";
+genmath::LongDouble printersimulation::Section::Zero = "0.0";
+genmath::LongDouble printersimulation::Section::One = "1.0";
+genmath::LongDouble printersimulation::Section::Two = "2.0";
+genmath::LongDouble printersimulation::Section::Sixty = "60.0";// for feed rate conversion
 
-void printingsimulation::Section::Init() {
+void printersimulation::Section::Init() {
 
 	if(XJerk == Zero || YJerk == Zero || XAcc == Zero || YAcc == Zero || MinResSpd == Zero)
 		throw std::exception("At least one global section parameter is not defined (Section).");
@@ -33,7 +33,7 @@ void printingsimulation::Section::Init() {
 		* Section::MaxResSpdTime * Section::MaxResSpdTime + Section::MaxResJerk * Section::MaxResSpdTime;
 }
 
-void printingsimulation::Section::UpdateGlobalResSpd(genmath::LongDouble new_res_spd) {
+void printersimulation::Section::UpdateGlobalResSpd(genmath::LongDouble new_res_spd) {
 
 	Section::MaxResSpd = new_res_spd;
 	
@@ -44,7 +44,7 @@ void printingsimulation::Section::UpdateGlobalResSpd(genmath::LongDouble new_res
 		* Section::MaxResSpdTime * Section::MaxResSpdTime + Section::MaxResJerk * Section::MaxResSpdTime;
 }
 
-printingsimulation::Section::Section() {
+printersimulation::Section::Section() {
 
 	start_point_ = nullptr;
 	end_point_ = nullptr;
@@ -68,7 +68,7 @@ printingsimulation::Section::Section() {
 }
 
 // creating the first section
-printingsimulation::Section::Section(GCodeCommand<genmath::LongDouble>* cmd_param) {
+printersimulation::Section::Section(GCodeCommand<genmath::LongDouble>* cmd_param) {
 
 	start_point_ = nullptr;
 	end_x_ = cmd_param->Get("X");
@@ -91,7 +91,7 @@ printingsimulation::Section::Section(GCodeCommand<genmath::LongDouble>* cmd_para
 	prev_sect_ = nullptr;
 }
 
-printingsimulation::Section::Section(const Section& orig) {
+printersimulation::Section::Section(const Section& orig) {
 
 	start_point_ = orig.start_point_;
 	end_point_ = orig.end_point_;
@@ -114,11 +114,11 @@ printingsimulation::Section::Section(const Section& orig) {
 	prev_sect_ = nullptr;
 }
 
-printingsimulation::Section::~Section() {
+printersimulation::Section::~Section() {
 
 }
 
-printingsimulation::Section& printingsimulation::Section::operator=(const Section& orig) {
+printersimulation::Section& printersimulation::Section::operator=(const Section& orig) {
 
 	start_point_ = orig.start_point_;
 	end_point_ = orig.end_point_;
@@ -143,7 +143,7 @@ printingsimulation::Section& printingsimulation::Section::operator=(const Sectio
 	return *this;
 }
 
-std::pair<genmath::LongDouble, genmath::LongDouble> printingsimulation::Section::operator()(genmath::LongDouble t) {
+std::pair<genmath::LongDouble, genmath::LongDouble> printersimulation::Section::operator()(genmath::LongDouble t) {
 	
 	if (start_point_ == nullptr) [[unlikely]]
 		throw std::exception("No start point defined, unfinished section (Section).");
@@ -161,7 +161,7 @@ std::pair<genmath::LongDouble, genmath::LongDouble> printingsimulation::Section:
 // This linearization is suboptimal respect to theoretical nonlinear time functions.
 // Multiple average speed partitioning by time might increase precision of kinematic representation
 // but requires more computation time.
-void printingsimulation::Section::UpdateSection(GCodeCommand<genmath::LongDouble>* cmd_param, genmath::LongDouble& unit_time_step) {
+void printersimulation::Section::UpdateSection(GCodeCommand<genmath::LongDouble>* cmd_param, genmath::LongDouble& unit_time_step) {
 
 	if (end_point_ == nullptr) [[unlikely]]
 		throw std::exception("No start point defined. Ill initiated section (Section).");
@@ -233,7 +233,7 @@ void printingsimulation::Section::UpdateSection(GCodeCommand<genmath::LongDouble
 	}
 }
 
-void printingsimulation::Section::SetPrevSect(Section* prev_sect) {
+void printersimulation::Section::SetPrevSect(Section* prev_sect) {
 
 	if (prev_sect == nullptr)
 		throw std::exception("Previous section parameter is null (Section).");
@@ -241,7 +241,7 @@ void printingsimulation::Section::SetPrevSect(Section* prev_sect) {
 	prev_sect_ = prev_sect;
 }
 
-void printingsimulation::Section::ConfigureSpeed(genmath::LongDouble& spd_mul) {
+void printersimulation::Section::ConfigureSpeed(genmath::LongDouble& spd_mul) {
 
 	if (spd_mul > Section::One)
 		throw std::exception("Increased speed is not available (Section).");
